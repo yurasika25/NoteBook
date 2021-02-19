@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Блокнот</string>
+    <string name="name">Введіть назву</string>
+    <string name="add_note">Додати нотатку</string>
+    <string name="todo">TODO</string>
+    <string name="empty">Empty</string>
+    <string name="title">Мої нотатки</string>
+    <string name="time">28.02.21 21:36</string>
+    <string name="hide">Приховати</string>
+    <string name="my_first_note">My first note</string>
+</resources>
