@@ -8,7 +8,7 @@
     <Toolbar
         android:id="@+id/toolbarOne"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="52dp"
         android:background="@color/my_fon"
         android:elevation="4dp"
         android:title="@string/title"
@@ -19,7 +19,7 @@
 
     <TextView
         android:id="@+id/tvEmpty"
-        android:textColor="@color/my_fon"
+        android:textColor="@color/grey_fon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/empty"
@@ -31,7 +31,6 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcViewId"
         android:layout_width="0dp"
-        android:layout_marginTop="3dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

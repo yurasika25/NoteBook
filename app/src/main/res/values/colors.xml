@@ -14,4 +14,5 @@
     <color name="grey_fon">#C8B1B1B1</color>
     <color name="time">#C8E3E3E3</color>
     <color name="card">#545454</color>
+    <color name="red">#C30000</color>
 </resources>

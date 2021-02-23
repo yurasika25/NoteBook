@@ -1,14 +1,16 @@
-package com.example.notebook
+package com.notes.notebook
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.notebook.db.MyAdapter
-import com.example.notebook.db.MyDbManger
+import com.notes.notebook.db.MyAdapter
+import com.notes.notebook.db.MyDbManger
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -32,10 +34,11 @@ class MainActivity : AppCompatActivity() {
         myDbManger.openDb()
         fillAdapter()
     }
-
     fun onClickNew(view: View) {
         val clickNew = Intent(this, EditActivity::class.java)
         startActivity(clickNew)
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
     }
 
     fun init() {

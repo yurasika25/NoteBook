@@ -1,4 +1,4 @@
-package com.example.notebook.db
+package com.notes.notebook.db
 
 object MyIntentConstants {
 

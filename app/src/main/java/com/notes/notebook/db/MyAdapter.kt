@@ -1,4 +1,4 @@
-package com.example.notebook.db
+package com.notes.notebook.db
 
 import android.content.Context
 import android.content.Intent
@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.notebook.EditActivity
-import com.example.notebook.R
+import com.notes.notebook.EditActivity
+import com.notes.notebook.R
 
 class MyAdapter (listMain:ArrayList<ListItem>, contextM:Context): RecyclerView.Adapter<MyAdapter.MyHolder>(){
     var listArray = listMain

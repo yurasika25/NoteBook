@@ -1,15 +1,19 @@
-package com.example.notebook
+package com.notes.notebook
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import com.example.notebook.db.MyDbManger
-import com.example.notebook.db.MyIntentConstants
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
+import com.notes.notebook.db.MyDbManger
+import com.notes.notebook.db.MyIntentConstants
 import kotlinx.android.synthetic.main.activity_edit.*
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class EditActivity : AppCompatActivity() {
 
@@ -23,8 +27,15 @@ class EditActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit)
         getMyIntents()
-    }
 
+        val et = findViewById<View>(R.id.editTitle) as EditText
+        val textLength = et.text.length
+        et.setSelection(textLength, textLength)
+
+        val text = findViewById<View>(R.id.editText) as EditText
+        val textLengthText = text.text.length
+        text.setSelection(textLengthText, textLengthText)
+    }
     override fun onDestroy() {
         super.onDestroy()
         myDbManger.closeDb()
@@ -47,8 +58,8 @@ class EditActivity : AppCompatActivity() {
         }
     }
 
-
     fun onClickSave(view: View) {
+
         val myTitle = editTitle.text.toString()
         val myDesk = editText.text.toString()
 
@@ -63,21 +74,19 @@ class EditActivity : AppCompatActivity() {
         }
     }
 
-
     fun onClickWriteText(view: View) {
         editTitle.isEnabled = true
         editText.isEnabled = true
 
         floatBtnSave.visibility = View.VISIBLE
-
-
         bt_text_write.visibility = View.GONE
 
-        if (tempImageUri == "empty") return
-
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
     }
 
     fun getMyIntents() {
+
         bt_text_write.visibility = View.GONE
         val i = intent
 
@@ -90,6 +99,7 @@ class EditActivity : AppCompatActivity() {
                 isEditState = true
                 editTitle.isEnabled = false
                 editText.isEnabled = false
+
                 bt_text_write.visibility = View.VISIBLE
                 editText.setText(i.getStringExtra(MyIntentConstants.I_DESK_KEY))
                 id = i.getIntExtra(MyIntentConstants.I_ID_KEY, 0)

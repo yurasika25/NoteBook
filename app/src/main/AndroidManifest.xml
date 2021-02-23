@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.notebook">
+    package="com.notes.notebook">
 
     <application
         android:allowBackup="true"
@@ -12,13 +12,12 @@
         android:theme="@style/Theme.NoteBook"
         tools:ignore="AllowBackup">
         <activity
-            android:name=".EditActivity"
+            android:name="com.notes.notebook.EditActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">
-
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name="com.notes.notebook.MainActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">
 
