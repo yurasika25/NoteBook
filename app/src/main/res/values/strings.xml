@@ -2,8 +2,8 @@
     <string name="app_name">Блокнот</string>
     <string name="name">Введіть назву</string>
     <string name="add_note">Додати нотатку</string>
-    <string name="todo">TODO</string>
-    <string name="empty">Empty</string>
+    <string name="empty">Додайте свої нотатки</string>
     <string name="title">Мої нотатки</string>
-    <string name="time">28.02.21 21:36</string>
+    <string name="title_edit">Створити нотатку</string>
+    <string name="save">Зберегти</string>
 </resources>

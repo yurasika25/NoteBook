@@ -5,8 +5,8 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.provider.BaseColumns
 
-class MyDbManger(val context: Context) {
-    val myDbHelper = MyDbHelper(context)
+class MyDbManager(private val context: Context) {
+    private val myDbHelper = MyDbHelper(context)
     var db: SQLiteDatabase? = null
 
     fun openDb() {

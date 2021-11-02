@@ -12,7 +12,6 @@ class MyDbHelper(contex: Context) : SQLiteOpenHelper(
 
         db?.execSQL(MyDbNameClass.CREATE_TABLE)
     }
-
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         db?.execSQL(MyDbNameClass.SQL_DELETE_TABLE)
         onCreate(db)
