@@ -84,7 +84,11 @@ class FragmentAddNote : Fragment() {
         }
     }
 
+    private fun testGit(one:String){
+    }
+
     private fun getTime(): String {
+        testGit("5")
         val time = Calendar.getInstance().time
         val formatter = SimpleDateFormat("dd.MM.yy kk:mm", Locale.getDefault())
         return formatter.format(time)
