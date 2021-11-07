@@ -15,7 +15,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 import com.notes.notebook.`fun`.*
 
-
 class FragmentAddNote : Fragment() {
 
     private var _id: Int? = null
@@ -84,13 +83,5 @@ class FragmentAddNote : Fragment() {
         }
     }
 
-    private fun testGit(one:String){
-    }
-
-    private fun getTime(): String {
-        testGit("5")
-        val time = Calendar.getInstance().time
-        val formatter = SimpleDateFormat("dd.MM.yy kk:mm", Locale.getDefault())
-        return formatter.format(time)
-    }
+    private fun getTime(): Long  = Date().time
 }

@@ -1,8 +1,10 @@
 package com.notes.notebook.db
 
-class ListItem {
-    var title = "empty"
-    var desc = "empty"
-    var time = ""
-    var id = 0
-}
+import java.util.*
+
+data class ListItem(
+    val id: Int,
+    val title: String,
+    val desc: String,
+    val time: Date,
+)

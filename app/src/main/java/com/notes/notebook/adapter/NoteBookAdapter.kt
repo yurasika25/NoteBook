@@ -15,21 +15,23 @@ import com.notes.notebook.db.MyIntentConstants.I_ID_KEY
 import com.notes.notebook.db.MyIntentConstants.I_TITLE_KEY
 import com.notes.notebook.fragment.FragmentAddNote
 import kotlinx.android.synthetic.main.rs_item.view.*
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
 class NoteBookAdapter : RecyclerView.Adapter<NoteBookAdapter.MyHolder>() {
     private val listMain: ArrayList<ListItem> = ArrayList()
 
+    private val formatter = SimpleDateFormat("dd.MM.yy kk:mm", Locale.getDefault())
+
     class MyHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     override fun onBindViewHolder(holder: MyHolder, position: Int) {
         val itemList = listMain[position]
         holder.itemView.tvTitle.text = itemList.title
-        holder.itemView.id_time.text = itemList.time
+        holder.itemView.id_time.text = formatter.format(itemList.time)
 
         holder.itemView.customContainer.setOnClickListener {
-
             val fragment: Fragment = FragmentAddNote()
             val bundle = Bundle()
             bundle.putString(I_TITLE_KEY, itemList.title)
@@ -55,7 +57,6 @@ class NoteBookAdapter : RecyclerView.Adapter<NoteBookAdapter.MyHolder>() {
 
     fun updateAdapter(listItems: List<ListItem>) {
         listMain.clear()
-        listMain.sortBy { it.time}
         listMain.addAll(listItems)
         notifyDataSetChanged()
     }

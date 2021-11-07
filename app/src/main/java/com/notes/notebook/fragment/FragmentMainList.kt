@@ -1,11 +1,9 @@
 package com.notes.notebook.fragment
 
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -57,7 +55,6 @@ class FragmentMainList : Fragment() {
         myDbManger.closeDb()
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
     override fun onResume() {
         super.onResume()
         myDbManger.openDb()
@@ -66,7 +63,6 @@ class FragmentMainList : Fragment() {
 
     private fun fillAdapter() {
         val list = myDbManger.readDbData()
-        list.reverse()
         noteBookAdapter.updateAdapter(list)
         tvEmpty.isVisible = list.isEmpty()
     }
