@@ -26,10 +26,10 @@ class MyDbManager(context: Context) {
             put(COLUMN_NAME_CONTENT, content)
             put(COLUMN_NAME_TIME, time)
         }
-        val insert = db?.insert(TABLE_NAME, null, values)
+      db?.insert(TABLE_NAME, null, values)
     }
 
-    fun removeItemFromDb(id: String) {
+    fun removeItemFromDb(id: Int) {
         val selection = "$COLUMN_NAME_ID=$id"
         db?.delete(TABLE_NAME, selection, null)
     }

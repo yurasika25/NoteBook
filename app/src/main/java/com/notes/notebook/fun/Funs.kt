@@ -8,8 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.notes.notebook.R
 
-lateinit var appCompatActivity: AppCompatActivity
-
 fun AppCompatActivity.replaceFragment(fragment: Fragment, addStack: Boolean = true) {
     if (addStack) {
         supportFragmentManager.beginTransaction()

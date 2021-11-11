@@ -1,25 +1,18 @@
 package com.notes.notebook.adapter
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.notes.notebook.R
-import com.notes.notebook.`fun`.appCompatActivity
 import com.notes.notebook.db.ListItem
 import com.notes.notebook.db.MyDbManager
-import com.notes.notebook.db.MyIntentConstants.I_DESK_KEY
-import com.notes.notebook.db.MyIntentConstants.I_ID_KEY
-import com.notes.notebook.db.MyIntentConstants.I_TITLE_KEY
-import com.notes.notebook.fragment.FragmentAddNote
 import kotlinx.android.synthetic.main.rs_item.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class NoteBookAdapter : RecyclerView.Adapter<NoteBookAdapter.MyHolder>() {
+class NoteBookAdapter(private val onItemClicked:(ListItem) -> Unit) : RecyclerView.Adapter<NoteBookAdapter.MyHolder>() {
     private val listMain: ArrayList<ListItem> = ArrayList()
 
     private val formatter = SimpleDateFormat("dd.MM.yy kk:mm", Locale.getDefault())
@@ -32,17 +25,7 @@ class NoteBookAdapter : RecyclerView.Adapter<NoteBookAdapter.MyHolder>() {
         holder.itemView.id_time.text = formatter.format(itemList.time)
 
         holder.itemView.customContainer.setOnClickListener {
-            val fragment: Fragment = FragmentAddNote()
-            val bundle = Bundle()
-            bundle.putString(I_TITLE_KEY, itemList.title)
-            bundle.putString(I_DESK_KEY, itemList.desc)
-            bundle.putInt(I_ID_KEY, itemList.id)
-            fragment.arguments = bundle
-            val fm = appCompatActivity.supportFragmentManager
-            val ft = fm.beginTransaction()
-            ft.replace(R.id.mainContainer, fragment)
-            ft.addToBackStack(null)
-            ft.commit()
+            onItemClicked(itemList)
         }
     }
 
@@ -62,9 +45,8 @@ class NoteBookAdapter : RecyclerView.Adapter<NoteBookAdapter.MyHolder>() {
     }
 
     fun removeItem(post: Int, dbManager: MyDbManager) {
-        dbManager.removeItemFromDb(listMain[post].id.toString())
+        dbManager.removeItemFromDb(listMain[post].id)
         listMain.removeAt(post)
-        notifyItemRangeChanged(0, listMain.size)
         notifyItemRemoved(post)
     }
 }

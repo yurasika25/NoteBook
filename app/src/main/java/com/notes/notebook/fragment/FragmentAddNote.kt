@@ -11,14 +11,32 @@ import com.notes.notebook.db.MyIntentConstants.I_DESK_KEY
 import com.notes.notebook.db.MyIntentConstants.I_ID_KEY
 import com.notes.notebook.db.MyIntentConstants.I_TITLE_KEY
 import kotlinx.android.synthetic.main.fragment_add_note.*
-import java.text.SimpleDateFormat
 import java.util.*
 import com.notes.notebook.`fun`.*
+import com.notes.notebook.db.ListItem
 
 class FragmentAddNote : Fragment() {
 
+    companion object {
+        fun newInstance(item: ListItem): FragmentAddNote {
+            val fragment = FragmentAddNote()
+            val bundle = Bundle()
+            bundle.putString(I_TITLE_KEY, item.title)
+            bundle.putString(I_DESK_KEY, item.desc)
+            bundle.putInt(I_ID_KEY, item.id)
+            fragment.arguments = bundle
+            return fragment
+        }
+    }
+
     private var _id: Int? = null
-    private val myDbManger = MyDbManager(appCompatActivity)
+    private lateinit var myDbManger: MyDbManager
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        myDbManger = MyDbManager(requireContext())
+        myDbManger.openDb()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,7 +52,6 @@ class FragmentAddNote : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        myDbManger.openDb()
         if (_id == null) {
             titleText.requestFocus()
             showKeyBoard()
@@ -83,5 +100,5 @@ class FragmentAddNote : Fragment() {
         }
     }
 
-    private fun getTime(): Long  = Date().time
+    private fun getTime(): Long = Date().time
 }
