@@ -8,9 +8,6 @@
     <color name="white">#FFFFFF</color>
     <color name="my_fon">#F6EDE2</color>
     <color name="grey_fon">#C8B1B1B1</color>
-    <color name="card">#545454</color>
-    <color name="colorPrimary">#4267B2</color>
-    <color name="colorBackground">#F8F8F8</color>
     <color name="note_book_color_main">#8C86AA</color>
     <color name="note_book_color_main_fon">#2E294E</color>
 </resources>
