@@ -12,6 +12,7 @@ class DbHelperNoteBook(context: Context) : SQLiteOpenHelper(
 
         db?.execSQL(DbNameClassNoteBook.CREATE_TABLE)
     }
+
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         db?.execSQL(DbNameClassNoteBook.SQL_DELETE_TABLE)
         onCreate(db)

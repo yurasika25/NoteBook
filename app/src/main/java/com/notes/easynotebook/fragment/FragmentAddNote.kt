@@ -66,7 +66,7 @@ class FragmentAddNote : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getBundleData()
-        floatBtnSaveFragment.setOnClickListener {
+        btnSaveNote.setOnClickListener {
             saveData()
         }
     }

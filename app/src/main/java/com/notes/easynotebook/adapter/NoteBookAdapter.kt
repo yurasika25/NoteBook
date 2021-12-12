@@ -12,7 +12,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class NoteBookAdapter(private val onItemClicked:(DbListItemNoteBook) -> Unit) : RecyclerView.Adapter<NoteBookAdapter.MyHolder>() {
+class NoteBookAdapter(private val onItemClicked: (DbListItemNoteBook) -> Unit) :
+    RecyclerView.Adapter<NoteBookAdapter.MyHolder>() {
     private val listMainDbListItemNoteBook: ArrayList<DbListItemNoteBook> = ArrayList()
 
     private val formatter = SimpleDateFormat("dd.MM.yy kk:mm", Locale.getDefault())

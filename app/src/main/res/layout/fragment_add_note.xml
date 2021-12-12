@@ -24,9 +24,8 @@
         android:textColor="@color/my_fon"
         android:textColorHint="@color/grey_fon"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/floatBtnSaveFragment"
+        app:layout_constraintBottom_toTopOf="@+id/btnSaveNote"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleText"
         tools:ignore="LabelFor" />
@@ -66,7 +65,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
-        android:id="@+id/floatBtnSaveFragment"
+        android:id="@+id/btnSaveNote"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:textAlignment="center"

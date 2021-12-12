@@ -26,7 +26,7 @@ class DbManagerNoteBook(context: Context) {
             put(COLUMN_NAME_CONTENT, content)
             put(COLUMN_NAME_TIME, time)
         }
-      db?.insert(TABLE_NAME, null, values)
+        db?.insert(TABLE_NAME, null, values)
     }
 
     fun removeItemFromDb(id: Int) {
