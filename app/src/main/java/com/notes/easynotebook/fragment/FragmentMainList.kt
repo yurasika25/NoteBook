@@ -1,4 +1,4 @@
-package com.notes.notebook.fragment
+package com.notes.easynotebook.fragment
 
 import android.animation.ValueAnimator
 import android.os.Bundle
@@ -11,15 +11,15 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.notes.notebook.R
-import com.notes.notebook.adapter.NoteBookAdapter
-import com.notes.notebook.db.MyDbManager
-import com.notes.notebook.main.MainActivity
+import com.notes.easynotebook.R
+import com.notes.easynotebook.adapter.NoteBookAdapter
+import com.notes.easynotebook.db.DbManagerNoteBook
+import com.notes.easynotebook.main.MainActivity
 import kotlinx.android.synthetic.main.fragment_main_list.*
 
 class FragmentMainList : Fragment() {
 
-    private lateinit var myDbManger: MyDbManager
+    private lateinit var dbMangerNoteBook: DbManagerNoteBook
 
     private val noteBookAdapter = NoteBookAdapter { itemList ->
         val fm = requireActivity().supportFragmentManager
@@ -34,8 +34,8 @@ class FragmentMainList : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        myDbManger = MyDbManager(requireContext())
-        myDbManger.openDb()
+        dbMangerNoteBook = DbManagerNoteBook(requireContext())
+        dbMangerNoteBook.openDb()
     }
 
     override fun onCreateView(
@@ -75,7 +75,7 @@ class FragmentMainList : Fragment() {
                 fabAnimator = ValueAnimator.ofFloat(
                     id_flot_edit_fragment.translationY, translationY
                 ).apply {
-                    duration = 500L
+                    duration = 250L
 
                     addUpdateListener {
                         id_flot_edit_fragment.translationY = it.animatedValue as Float
@@ -94,7 +94,7 @@ class FragmentMainList : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        myDbManger.closeDb()
+        dbMangerNoteBook.closeDb()
     }
 
     override fun onResume() {
@@ -103,7 +103,7 @@ class FragmentMainList : Fragment() {
     }
 
     private fun fillAdapter() {
-        val list = myDbManger.readDbData()
+        val list = dbMangerNoteBook.readDbData()
         noteBookAdapter.updateAdapter(list)
         tvEmpty.isVisible = list.isEmpty()
     }
@@ -127,7 +127,7 @@ class FragmentMainList : Fragment() {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                noteBookAdapter.removeItem(viewHolder.adapterPosition, myDbManger)
+                noteBookAdapter.removeItem(viewHolder.adapterPosition, dbMangerNoteBook)
                 tvEmpty.isVisible = noteBookAdapter.itemCount == 0
             }
         })

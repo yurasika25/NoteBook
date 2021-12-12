@@ -1,41 +1,41 @@
-package com.notes.notebook.fragment
+package com.notes.easynotebook.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.notes.notebook.R
-import com.notes.notebook.db.MyDbManager
-import com.notes.notebook.db.MyIntentConstants.I_DESK_KEY
-import com.notes.notebook.db.MyIntentConstants.I_ID_KEY
-import com.notes.notebook.db.MyIntentConstants.I_TITLE_KEY
+import com.notes.easynotebook.R
+import com.notes.easynotebook.db.DbManagerNoteBook
+import com.notes.easynotebook.db.ConstantsIntentNoteBook.I_DESK_KEY
+import com.notes.easynotebook.db.ConstantsIntentNoteBook.I_ID_KEY
+import com.notes.easynotebook.db.ConstantsIntentNoteBook.I_TITLE_KEY
 import kotlinx.android.synthetic.main.fragment_add_note.*
 import java.util.*
-import com.notes.notebook.`fun`.*
-import com.notes.notebook.db.ListItem
+import com.notes.easynotebook.`fun`.*
+import com.notes.easynotebook.db.DbListItemNoteBook
 
 class FragmentAddNote : Fragment() {
 
     companion object {
-        fun newInstance(item: ListItem): FragmentAddNote {
+        fun newInstance(itemDbListItemNoteBook: DbListItemNoteBook): FragmentAddNote {
             val fragment = FragmentAddNote()
             val bundle = Bundle()
-            bundle.putString(I_TITLE_KEY, item.title)
-            bundle.putString(I_DESK_KEY, item.desc)
-            bundle.putInt(I_ID_KEY, item.id)
+            bundle.putString(I_TITLE_KEY, itemDbListItemNoteBook.title)
+            bundle.putString(I_DESK_KEY, itemDbListItemNoteBook.desc)
+            bundle.putInt(I_ID_KEY, itemDbListItemNoteBook.id)
             fragment.arguments = bundle
             return fragment
         }
     }
 
     private var _id: Int? = null
-    private lateinit var myDbManger: MyDbManager
+    private lateinit var dbMangerNoteBook: DbManagerNoteBook
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        myDbManger = MyDbManager(requireContext())
-        myDbManger.openDb()
+        dbMangerNoteBook = DbManagerNoteBook(requireContext())
+        dbMangerNoteBook.openDb()
     }
 
     override fun onCreateView(
@@ -47,7 +47,7 @@ class FragmentAddNote : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        myDbManger.closeDb()
+        dbMangerNoteBook.closeDb()
     }
 
     override fun onResume() {
@@ -76,9 +76,9 @@ class FragmentAddNote : Fragment() {
         val myDesk = descriptionText.text.toString()
         if (myTitle != "" && myDesk != "")
             if (_id != null) {
-                myDbManger.updateItem(myTitle, myDesk, _id!!, getTime())
+                dbMangerNoteBook.updateItem(myTitle, myDesk, _id!!, getTime())
             } else {
-                myDbManger.insertToDb(myTitle, myDesk, getTime())
+                dbMangerNoteBook.insertToDb(myTitle, myDesk, getTime())
             }
         if (myTitle != "" && myDesk != "") {
             showToast("Збережено")

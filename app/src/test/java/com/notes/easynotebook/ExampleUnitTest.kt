@@ -1,4 +1,4 @@
-package com.notes.notebook
+package com.notes.easynotebook
 
 import org.junit.Test
 

@@ -1,8 +1,8 @@
-package com.notes.notebook.db
+package com.notes.easynotebook.db
 
 import java.util.*
 
-data class ListItem(
+data class DbListItemNoteBook(
     val id: Int,
     val title: String,
     val desc: String,

@@ -1,8 +1,8 @@
-package com.notes.notebook.db
+package com.notes.easynotebook.db
 
 import android.provider.BaseColumns
 
-object MyDbNameClass : BaseColumns {
+object DbNameClassNoteBook : BaseColumns {
     const val TABLE_NAME = "my_table"
     const val COLUMN_NAME_ID = "id"
     const val COLUMN_NAME_TITLE = "title"

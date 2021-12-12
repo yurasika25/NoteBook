@@ -1,19 +1,19 @@
-package com.notes.notebook.db
+package com.notes.easynotebook.db
 
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
-import com.notes.notebook.db.MyDbNameClass.COLUMN_NAME_CONTENT
-import com.notes.notebook.db.MyDbNameClass.COLUMN_NAME_ID
-import com.notes.notebook.db.MyDbNameClass.COLUMN_NAME_TIME
-import com.notes.notebook.db.MyDbNameClass.COLUMN_NAME_TITLE
-import com.notes.notebook.db.MyDbNameClass.TABLE_NAME
+import com.notes.easynotebook.db.DbNameClassNoteBook.COLUMN_NAME_CONTENT
+import com.notes.easynotebook.db.DbNameClassNoteBook.COLUMN_NAME_ID
+import com.notes.easynotebook.db.DbNameClassNoteBook.COLUMN_NAME_TIME
+import com.notes.easynotebook.db.DbNameClassNoteBook.COLUMN_NAME_TITLE
+import com.notes.easynotebook.db.DbNameClassNoteBook.TABLE_NAME
 import java.util.*
 import kotlin.collections.ArrayList
 
-class MyDbManager(context: Context) {
+class DbManagerNoteBook(context: Context) {
 
-    private val myDbHelper = MyDbHelper(context)
+    private val myDbHelper = DbHelperNoteBook(context)
     private var db: SQLiteDatabase? = null
 
     fun openDb() {
@@ -44,26 +44,26 @@ class MyDbManager(context: Context) {
         db?.update(TABLE_NAME, values, selection, null)
     }
 
-    fun readDbData(): ArrayList<ListItem> {
-        val dataList = ArrayList<ListItem>()
-        val cursor = db?.query(
+    fun readDbData(): ArrayList<DbListItemNoteBook> {
+        val dataList = ArrayList<DbListItemNoteBook>()
+        val cursorDb = db?.query(
             TABLE_NAME, null, null, null,
             null, null, "$COLUMN_NAME_TIME DESC"
         )
 
-        while (cursor?.moveToNext() == true) {
-            val title = cursor.getString(cursor.getColumnIndex(COLUMN_NAME_TITLE))
+        while (cursorDb?.moveToNext() == true) {
+            val title = cursorDb.getString(cursorDb.getColumnIndexOrThrow(COLUMN_NAME_TITLE))
             val desc =
-                cursor.getString(cursor.getColumnIndex(COLUMN_NAME_CONTENT))
+                cursorDb.getString(cursorDb.getColumnIndexOrThrow(COLUMN_NAME_CONTENT))
             val id =
-                cursor.getInt(cursor.getColumnIndex(COLUMN_NAME_ID))
+                cursorDb.getInt(cursorDb.getColumnIndexOrThrow(COLUMN_NAME_ID))
             val time =
-                Date(cursor.getLong(cursor.getColumnIndex(COLUMN_NAME_TIME)))
-            val item = ListItem(id, title, desc, time)
+                Date(cursorDb.getLong(cursorDb.getColumnIndexOrThrow(COLUMN_NAME_TIME)))
+            val item = DbListItemNoteBook(id, title, desc, time)
             dataList.add(item)
         }
 
-        cursor?.close()
+        cursorDb?.close()
         return dataList
     }
 

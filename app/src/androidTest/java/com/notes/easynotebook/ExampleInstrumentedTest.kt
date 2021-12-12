@@ -1,4 +1,4 @@
-package com.notes.notebook
+package com.notes.easynotebook
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

@@ -1,11 +1,11 @@
-package com.notes.notebook.main
+package com.notes.easynotebook.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.notes.notebook.R
-import com.notes.notebook.`fun`.replaceFragment
-import com.notes.notebook.fragment.FragmentAddNote
-import com.notes.notebook.fragment.FragmentMainList
+import com.notes.easynotebook.R
+import com.notes.easynotebook.`fun`.replaceFragment
+import com.notes.easynotebook.fragment.FragmentAddNote
+import com.notes.easynotebook.fragment.FragmentMainList
 
 class MainActivity : AppCompatActivity() {
 

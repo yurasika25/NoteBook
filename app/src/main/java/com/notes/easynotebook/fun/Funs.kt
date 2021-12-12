@@ -1,4 +1,4 @@
-package com.notes.notebook.`fun`
+package com.notes.easynotebook.`fun`
 
 import android.content.Context
 import android.text.Editable
@@ -6,7 +6,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.notes.notebook.R
+import com.notes.easynotebook.R
 
 fun AppCompatActivity.replaceFragment(fragment: Fragment, addStack: Boolean = true) {
     if (addStack) {
