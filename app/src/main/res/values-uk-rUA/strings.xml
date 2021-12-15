@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_edit">Створити нотатку</string>
+    <string name="title">Мої нотатки</string>
+    <string name="save">Зберегти</string>
+    <string name="name">Введіть назву</string>
+    <string name="add_note">Додайте нотатку</string>
+    <string name="empty">Додайте свої нотатки</string>
+    <string name="app_name">Notebook</string>
+    <string name="fill_fields_toast">Заповніть усі поля</string>
+    <string name="save_toast">Збережено</string>
+    <string name="privacy_policy">Політика конфіденційності</string>
+</resources>

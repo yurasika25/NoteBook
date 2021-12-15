@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.notes.easynotebook.R
 import com.notes.easynotebook.db.DbManagerNoteBook
@@ -81,10 +82,10 @@ class FragmentAddNote : Fragment() {
                 dbMangerNoteBook.insertToDb(myTitle, myDesk, getTime())
             }
         if (myTitle != "" && myDesk != "") {
-            showToast("Збережено")
+            showToast(getString(R.string.save_toast))
             requireActivity().onBackPressed()
         } else
-            showToast("Заповніть усі поля")
+            showToast(getString(R.string.fill_fields_toast))
     }
 
     private fun getBundleData() {

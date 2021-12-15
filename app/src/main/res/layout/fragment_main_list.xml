@@ -22,28 +22,30 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="TextContrastCheck" />
 
-    <Toolbar
-        android:id="@+id/toolbarOne"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarMain"
         android:layout_width="match_parent"
         android:layout_height="52dp"
         android:background="@color/my_fon"
         android:elevation="4dp"
-        android:title="@string/title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:menu="@menu/privacy_menu"
+        app:title="@string/title"
+        app:titleTextColor="@color/note_book_color_main_fon" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcViewId"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:clipToPadding="false"
         android:paddingBottom="8dp"
         android:scrollbars="vertical"
-        android:clipToPadding="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarOne"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarMain"
         tools:listitem="@layout/rs_item" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

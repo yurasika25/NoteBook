@@ -2,6 +2,7 @@ package com.notes.easynotebook.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.notes.easynotebook.R
 import com.notes.easynotebook.`fun`.replaceFragment
 import com.notes.easynotebook.fragment.FragmentAddNote
@@ -13,6 +14,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
         goToMainFragment()
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
     }
 
     private fun goToMainFragment() {
@@ -23,4 +25,3 @@ class MainActivity : AppCompatActivity() {
         replaceFragment(FragmentAddNote(), true)
     }
 }
-
