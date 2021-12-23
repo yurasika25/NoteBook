@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Notebook</string>
+    <string name="app_name">Easy NoteBook</string>
     <string name="name">Enter title</string>
     <string name="add_note">Enter memo</string>
     <string name="title">My notes</string>
@@ -9,5 +9,5 @@
     <string name="fill_fields_toast">You must fill all fields</string>
     <string name="save_toast">Saved</string>
     <string name="privacy_policy">Privacy Policy</string>
-    <string name="url_privacy_policy" translatable="false">"https://docs.google.com/document/d/10TEwMYse6gjKO9kqzLW2RuXQ0H_o-05H_CynEl4R7ho/edit?usp=sharing"</string>
+    <string name="url_privacy_policy">https://docs.google.com/document/d/1U_Bv73HjvWQJrOsmcKawBxhUehpF7l7np4VHf2MTYyM/edit?usp=sharing</string>
 </resources>
