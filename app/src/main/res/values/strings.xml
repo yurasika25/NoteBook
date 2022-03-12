@@ -10,4 +10,8 @@
     <string name="save_toast">Saved</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="url_privacy_policy">https://docs.google.com/document/d/1U_Bv73HjvWQJrOsmcKawBxhUehpF7l7np4VHf2MTYyM/edit?usp=sharing</string>
+    <string name="space">\u0020</string>
+    <string name="text_size">Size should be between 2 and 40</string>
+    <string name="empty_empty">Пусто</string>
+    <string name="not_empty">Not empty</string>
 </resources>

@@ -25,7 +25,7 @@ fun AppCompatActivity.replaceFragment(fragment: Fragment, addStack: Boolean = tr
     }
 }
 
-fun Fragment.showToast(message: String) {
+fun Fragment.showToast(message: Int) {
     Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show()
 }
 

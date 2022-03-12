@@ -4,17 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.notes.easynotebook.R
-import com.notes.easynotebook.db.DbManagerNoteBook
+import com.notes.easynotebook.`fun`.hideKeyBoard
+import com.notes.easynotebook.`fun`.showKeyBoard
+import com.notes.easynotebook.`fun`.showToast
+import com.notes.easynotebook.`fun`.toEditable
 import com.notes.easynotebook.db.ConstantsIntentNoteBook.I_DESK_KEY
 import com.notes.easynotebook.db.ConstantsIntentNoteBook.I_ID_KEY
 import com.notes.easynotebook.db.ConstantsIntentNoteBook.I_TITLE_KEY
+import com.notes.easynotebook.db.DbListItemNoteBook
+import com.notes.easynotebook.db.DbManagerNoteBook
 import kotlinx.android.synthetic.main.fragment_add_note.*
 import java.util.*
-import com.notes.easynotebook.`fun`.*
-import com.notes.easynotebook.db.DbListItemNoteBook
 
 class FragmentAddNote : Fragment() {
 
@@ -73,8 +75,8 @@ class FragmentAddNote : Fragment() {
     }
 
     private fun saveData() {
-        val myTitle = titleText.text.toString()
-        val myDesk = descriptionText.text.toString()
+        val myTitle = titleText.text.toString().trim()
+        val myDesk = descriptionText.text.toString().trim()
         if (myTitle != "" && myDesk != "")
             if (_id != null) {
                 dbMangerNoteBook.updateItem(myTitle, myDesk, _id!!, getTime())
@@ -82,10 +84,10 @@ class FragmentAddNote : Fragment() {
                 dbMangerNoteBook.insertToDb(myTitle, myDesk, getTime())
             }
         if (myTitle != "" && myDesk != "") {
-            showToast(getString(R.string.save_toast))
+            showToast(R.string.save_toast)
             requireActivity().onBackPressed()
         } else
-            showToast(getString(R.string.fill_fields_toast))
+            showToast(R.string.fill_fields_toast)
     }
 
     private fun getBundleData() {

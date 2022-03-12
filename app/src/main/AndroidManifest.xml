@@ -14,7 +14,8 @@
 
         <activity
             android:name="com.notes.easynotebook.main.MainActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
+            android:exported="true"
             tools:ignore="IntentFilterExportedReceiver,LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
