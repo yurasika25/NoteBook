@@ -10,12 +10,12 @@ import com.notes.easynotebook.`fun`.hideKeyBoard
 import com.notes.easynotebook.`fun`.showKeyBoard
 import com.notes.easynotebook.`fun`.showToast
 import com.notes.easynotebook.`fun`.toEditable
+import com.notes.easynotebook.databinding.FragmentAddNoteBinding
 import com.notes.easynotebook.db.ConstantsIntentNoteBook.I_DESK_KEY
 import com.notes.easynotebook.db.ConstantsIntentNoteBook.I_ID_KEY
 import com.notes.easynotebook.db.ConstantsIntentNoteBook.I_TITLE_KEY
 import com.notes.easynotebook.db.DbListItemNoteBook
 import com.notes.easynotebook.db.DbManagerNoteBook
-import kotlinx.android.synthetic.main.fragment_add_note.*
 import java.util.*
 
 class FragmentAddNote : Fragment() {
@@ -34,6 +34,8 @@ class FragmentAddNote : Fragment() {
 
     private var _id: Int? = null
     private lateinit var dbMangerNoteBook: DbManagerNoteBook
+    private var _binding: FragmentAddNoteBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,8 +46,9 @@ class FragmentAddNote : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_add_note, container, false)
+    ): View {
+        _binding = FragmentAddNoteBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onDestroy() {
@@ -56,7 +59,7 @@ class FragmentAddNote : Fragment() {
     override fun onResume() {
         super.onResume()
         if (_id == null) {
-            titleText.requestFocus()
+            binding.titleText.requestFocus()
             showKeyBoard()
         }
     }
@@ -69,14 +72,14 @@ class FragmentAddNote : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getBundleData()
-        btnSaveNote.setOnClickListener {
+        binding.btnSaveNote.setOnClickListener {
             saveData()
         }
     }
 
     private fun saveData() {
-        val myTitle = titleText.text.toString().trim()
-        val myDesk = descriptionText.text.toString().trim()
+        val myTitle = binding.titleText.text.toString().trim()
+        val myDesk = binding.descriptionText.text.toString().trim()
         if (myTitle != "" && myDesk != "")
             if (_id != null) {
                 dbMangerNoteBook.updateItem(myTitle, myDesk, _id!!, getTime())
@@ -92,10 +95,10 @@ class FragmentAddNote : Fragment() {
 
     private fun getBundleData() {
         val value = arguments?.getString(I_TITLE_KEY)
-        titleText.text = value?.toEditable()
+        binding.titleText.text = value?.toEditable()
 
         val valueTwo = arguments?.getString(I_DESK_KEY)
-        descriptionText.text = valueTwo?.toEditable()
+        binding.descriptionText.text = valueTwo?.toEditable()
 
         val idValue = arguments?.getInt(I_ID_KEY)
         idValue?.let {

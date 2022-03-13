@@ -15,13 +15,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.notes.easynotebook.R
 import com.notes.easynotebook.adapter.NoteBookAdapter
+import com.notes.easynotebook.databinding.FragmentMainListBinding
 import com.notes.easynotebook.db.DbManagerNoteBook
 import com.notes.easynotebook.main.MainActivity
-import kotlinx.android.synthetic.main.fragment_main_list.*
 
 class FragmentMainList : Fragment() {
 
     private lateinit var dbMangerNoteBook: DbManagerNoteBook
+    private var _binding: FragmentMainListBinding? = null
+    private val binding get() = _binding!!
 
     private val noteBookAdapter = NoteBookAdapter { itemList ->
         val fm = requireActivity().supportFragmentManager
@@ -43,8 +45,9 @@ class FragmentMainList : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_main_list, container, false)
+    ): View {
+        _binding = FragmentMainListBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -56,7 +59,7 @@ class FragmentMainList : Fragment() {
     }
 
     private fun showPrivatePolicy() {
-       toolbarMain.setOnMenuItemClickListener { menuItem ->
+        binding.toolbarMain.setOnMenuItemClickListener { menuItem ->
            when (menuItem.itemId) {
                R.id.menu_privacy_policy -> openPrivatePolice()
            }
@@ -67,22 +70,22 @@ class FragmentMainList : Fragment() {
     private fun openPrivatePolice() {
         val url = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_privacy_policy)))
         startActivity(url)
-
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         fabAnimator?.cancel()
+        _binding = null
     }
 
     private fun showAndHideFloat() {
-        rcViewId.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        binding.rcViewId.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val translationY = if (dy > 0) {
                     if (isHideAnimating == true) return
                     isHideAnimating = true
-                    id_flot_edit_fragment.height + id_flot_edit_fragment.marginBottom.toFloat()
+                    binding.idFlotEditFragment.height + binding.idFlotEditFragment.marginBottom.toFloat()
                 } else {
                     if (isHideAnimating == false) return
                     isHideAnimating = false
@@ -91,12 +94,12 @@ class FragmentMainList : Fragment() {
 
                 fabAnimator?.cancel()
                 fabAnimator = ValueAnimator.ofFloat(
-                    id_flot_edit_fragment.translationY, translationY
+                    binding.idFlotEditFragment.translationY, translationY
                 ).apply {
                     duration = 250L
 
                     addUpdateListener {
-                        id_flot_edit_fragment.translationY = it.animatedValue as Float
+                        binding.idFlotEditFragment.translationY = it.animatedValue as Float
                     }
                     start()
                 }
@@ -105,7 +108,7 @@ class FragmentMainList : Fragment() {
     }
 
     private fun startFragmentAddNote() {
-        id_flot_edit_fragment.setOnClickListener {
+        binding.idFlotEditFragment.setOnClickListener {
             (requireActivity() as MainActivity).goToFragmentAddNote()
         }
     }
@@ -123,14 +126,14 @@ class FragmentMainList : Fragment() {
     private fun fillAdapter() {
         val list = dbMangerNoteBook.readDbData()
         noteBookAdapter.updateAdapter(list)
-        tvEmpty.isVisible = list.isEmpty()
+        binding.tvEmpty.isVisible = list.isEmpty()
     }
 
     private fun init() {
-        rcViewId.layoutManager = LinearLayoutManager(requireContext())
+        binding.rcViewId.layoutManager = LinearLayoutManager(requireContext())
         val swapHelper = getSwapMg()
-        swapHelper.attachToRecyclerView(rcViewId)
-        rcViewId.adapter = noteBookAdapter
+        swapHelper.attachToRecyclerView(binding.rcViewId)
+        binding.rcViewId.adapter = noteBookAdapter
     }
 
     private fun getSwapMg(): ItemTouchHelper {
@@ -146,7 +149,7 @@ class FragmentMainList : Fragment() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 noteBookAdapter.removeItem(viewHolder.adapterPosition, dbMangerNoteBook)
-                tvEmpty.isVisible = noteBookAdapter.itemCount == 0
+                binding.tvEmpty.isVisible = noteBookAdapter.itemCount == 0
             }
         })
     }
