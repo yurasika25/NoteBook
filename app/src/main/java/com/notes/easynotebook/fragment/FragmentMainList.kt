@@ -9,17 +9,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.core.view.marginBottom
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.notes.easynotebook.base.BaseFragment
 import com.notes.easynotebook.R
 import com.notes.easynotebook.adapter.NoteBookAdapter
 import com.notes.easynotebook.databinding.FragmentMainListBinding
 import com.notes.easynotebook.db.DbManagerNoteBook
 import com.notes.easynotebook.main.MainActivity
 
-class FragmentMainList : Fragment() {
+class FragmentMainList : BaseFragment() {
 
     private lateinit var dbMangerNoteBook: DbManagerNoteBook
     private var _binding: FragmentMainListBinding? = null

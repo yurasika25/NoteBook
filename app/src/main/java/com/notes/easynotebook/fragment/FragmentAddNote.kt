@@ -4,23 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import com.notes.easynotebook.base.BaseFragment
 import com.notes.easynotebook.R
-import com.notes.easynotebook.`fun`.hideKeyBoard
-import com.notes.easynotebook.`fun`.showKeyBoard
-import com.notes.easynotebook.`fun`.showToast
-import com.notes.easynotebook.`fun`.toEditable
 import com.notes.easynotebook.databinding.FragmentAddNoteBinding
-import com.notes.easynotebook.db.ConstantsIntentNoteBook.I_DESK_KEY
-import com.notes.easynotebook.db.ConstantsIntentNoteBook.I_ID_KEY
-import com.notes.easynotebook.db.ConstantsIntentNoteBook.I_TITLE_KEY
 import com.notes.easynotebook.db.DbListItemNoteBook
 import com.notes.easynotebook.db.DbManagerNoteBook
 import java.util.*
 
-class FragmentAddNote : Fragment() {
+class FragmentAddNote : BaseFragment() {
 
     companion object {
+        const val I_TITLE_KEY = "title_key"
+        const val I_DESK_KEY = "desk_key"
+        const val I_ID_KEY = "id_key"
+
         fun newInstance(itemDbListItemNoteBook: DbListItemNoteBook): FragmentAddNote {
             val fragment = FragmentAddNote()
             val bundle = Bundle()
@@ -56,22 +53,14 @@ class FragmentAddNote : Fragment() {
         dbMangerNoteBook.closeDb()
     }
 
-    override fun onResume() {
-        super.onResume()
-        if (_id == null) {
-            binding.titleText.requestFocus()
-            showKeyBoard()
-        }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        hideKeyBoard()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getBundleData()
+        if (_id == null && savedInstanceState == null) {
+            showKeyBoard()
+            binding.titleText.requestFocus()
+        }
+
         binding.btnSaveNote.setOnClickListener {
             saveData()
         }
@@ -95,15 +84,20 @@ class FragmentAddNote : Fragment() {
 
     private fun getBundleData() {
         val value = arguments?.getString(I_TITLE_KEY)
-        binding.titleText.text = value?.toEditable()
+        binding.titleText.setText(value)
 
-        val valueTwo = arguments?.getString(I_DESK_KEY)
-        binding.descriptionText.text = valueTwo?.toEditable()
+        val valueDesk = arguments?.getString(I_DESK_KEY)
+        binding.descriptionText.setText(valueDesk)
 
         val idValue = arguments?.getInt(I_ID_KEY)
         idValue?.let {
             _id = idValue
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun getTime(): Long = Date().time
