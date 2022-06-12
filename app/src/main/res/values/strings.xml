@@ -1,17 +1,12 @@
 <resources>
-    <string name="app_name">Easy NoteBook</string>
-    <string name="name">Enter title</string>
+    <string name="name">Easy NoteBook</string>
+    <string name="t_name">Enter title</string>
     <string name="add_note">Enter memo</string>
     <string name="title">My notes</string>
-    <string name="title_edit">Create note</string>
     <string name="save">Save</string>
-    <string name="empty">Empty</string>
-    <string name="fill_fields_toast">You must fill all fields</string>
-    <string name="save_toast">Saved</string>
-    <string name="privacy_policy">Privacy Policy</string>
-    <string name="url_privacy_policy">https://docs.google.com/document/d/1U_Bv73HjvWQJrOsmcKawBxhUehpF7l7np4VHf2MTYyM/edit?usp=sharing</string>
-    <string name="space">\u0020</string>
-    <string name="text_size">Size should be between 2 and 40</string>
-    <string name="empty_empty">Пусто</string>
-    <string name="not_empty">Not empty</string>
+    <string name="empty">Add your notes</string>
+    <string name="f_toast">You must fill all fields</string>
+    <string name="save_t">Saved</string>
+    <string name="p_pol">Privacy Policy</string>
+    <string name="url">https://docs.google.com/document/d/1U_Bv73HjvWQJrOsmcKawBxhUehpF7l7np4VHf2MTYyM/edit?usp=sharing</string>
 </resources>

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "201757189146",
+    "project_id": "easy-notebook-c2f42",
+    "storage_bucket": "easy-notebook-c2f42.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:201757189146:android:10428555ab49ff44c0dda3",
+        "android_client_info": {
+          "package_name": "com.notes.easynotebook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "201757189146-r44alarca1m07kk8egde42ejkotb131s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeo0jjBJToBfsC6OUwpHMUqUycTH9g61I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "201757189146-r44alarca1m07kk8egde42ejkotb131s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

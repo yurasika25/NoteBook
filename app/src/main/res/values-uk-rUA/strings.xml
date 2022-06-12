@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="title_edit">Створити нотатку</string>
     <string name="title">Мої нотатки</string>
     <string name="save">Зберегти</string>
     <string name="add_note">Додайте нотатку</string>
     <string name="empty">Додайте свої нотатки</string>
-    <string name="app_name">Блокнот</string>
-    <string name="fill_fields_toast">Заповніть усі поля</string>
-    <string name="save_toast">Збережено</string>
-    <string name="privacy_policy">Політика конфіденційності</string>
-    <string name="url_privacy_policy">https://docs.google.com/document/d/10TEwMYse6gjKO9kqzLW2RuXQ0H_o-05H_CynEl4R7ho/edit?usp=sharing</string>
-    <string name="name">Введіть назву</string>
+    <string name="name">Блокнот</string>
+    <string name="f_toast">Заповніть усі поля</string>
+    <string name="save_t">Збережено</string>
+    <string name="p_pol">Політика конфіденційності</string>
+    <string name="url">https://docs.google.com/document/d/10TEwMYse6gjKO9kqzLW2RuXQ0H_o-05H_CynEl4R7ho/edit?usp=sharing</string>
+    <string name="t_name">Введіть назву</string>
 </resources>

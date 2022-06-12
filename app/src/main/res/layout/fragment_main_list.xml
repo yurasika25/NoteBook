@@ -16,14 +16,14 @@
         android:text="@string/empty"
         android:textColor="@color/my_fon"
         android:textSize="19sp"
-        app:layout_constraintBottom_toBottomOf="@+id/rcViewId"
+        app:layout_constraintBottom_toBottomOf="@+id/rv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="TextContrastCheck" />
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbarMain"
+        android:id="@+id/tbMain"
         android:layout_width="match_parent"
         android:layout_height="52dp"
         android:background="@color/my_fon"
@@ -36,7 +36,7 @@
         app:titleTextColor="@color/note_book_color_main_fon" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcViewId"
+        android:id="@+id/rv"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:clipToPadding="false"
@@ -45,7 +45,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarMain"
+        app:layout_constraintTop_toBottomOf="@+id/tbMain"
         tools:listitem="@layout/rs_item" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

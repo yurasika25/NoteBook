@@ -76,10 +76,11 @@ class FragmentAddNote : BaseFragment() {
                 dbMangerNoteBook.insertToDb(myTitle, myDesk, getTime())
             }
         if (myTitle != "" && myDesk != "") {
-            showToast(R.string.save_toast)
+            showToast(R.string.save_t)
+            hideKeyBoard()
             requireActivity().onBackPressed()
         } else
-            showToast(R.string.fill_fields_toast)
+            showToast(R.string.f_toast)
     }
 
     private fun getBundleData() {

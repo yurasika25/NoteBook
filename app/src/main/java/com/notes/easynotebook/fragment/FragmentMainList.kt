@@ -59,16 +59,16 @@ class FragmentMainList : BaseFragment() {
     }
 
     private fun showPrivatePolicy() {
-        binding.toolbarMain.setOnMenuItemClickListener { menuItem ->
-           when (menuItem.itemId) {
-               R.id.menu_privacy_policy -> openPrivatePolice()
-           }
-           true
-       }
+        binding.tbMain.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.menu_privacy_policy -> openPrivatePolice()
+            }
+            true
+        }
     }
 
     private fun openPrivatePolice() {
-        val url = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_privacy_policy)))
+        val url = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url)))
         startActivity(url)
     }
 
@@ -79,7 +79,7 @@ class FragmentMainList : BaseFragment() {
     }
 
     private fun showAndHideFloat() {
-        binding.rcViewId.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        binding.rv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val translationY = if (dy > 0) {
@@ -130,10 +130,12 @@ class FragmentMainList : BaseFragment() {
     }
 
     private fun init() {
-        binding.rcViewId.layoutManager = LinearLayoutManager(requireContext())
-        val swapHelper = getSwapMg()
-        swapHelper.attachToRecyclerView(binding.rcViewId)
-        binding.rcViewId.adapter = noteBookAdapter
+        with(binding) {
+            rv.layoutManager = LinearLayoutManager(requireContext())
+            val swapHelper = getSwapMg()
+            swapHelper.attachToRecyclerView(rv)
+            rv.adapter = noteBookAdapter
+        }
     }
 
     private fun getSwapMg(): ItemTouchHelper {

@@ -2,7 +2,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container_viw"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/note_book_color_main_fon">
@@ -14,11 +13,11 @@
         android:autofillHints="username"
         android:background="@android:color/transparent"
         android:ems="10"
+        android:fontFamily="@font/montserrat_regular"
         android:gravity="fill_horizontal"
         android:hint="@string/add_note"
         android:inputType="textMultiLine|textCapSentences"
-        android:paddingEnd="10dp"
-        android:paddingStart="10dp"
+        android:paddingHorizontal="10dp"
         android:paddingTop="5dp"
         android:scrollbars="vertical"
         android:textColor="@color/my_fon"
@@ -30,12 +29,35 @@
         app:layout_constraintTop_toBottomOf="@+id/titleText"
         tools:ignore="LabelFor" />
 
-    <TextView
+    <FrameLayout
+        android:id="@+id/btnSaveNote"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/my_fon"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/montserrat_regular"
+            android:text="@string/save"
+            android:textColor="@color/note_book_color_main_fon"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </FrameLayout>
+
+    <View
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="0.05dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginHorizontal="8dp"
         android:background="@color/grey_fon"
         app:layout_constraintBottom_toBottomOf="@+id/titleText"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,12 +71,12 @@
         android:backgroundTint="@android:color/transparent"
         android:cursorVisible="true"
         android:ems="10"
-        android:hint="@string/name"
+        android:fontFamily="@font/montserrat_regular"
+        android:hint="@string/t_name"
         android:inputType="textCapSentences"
         android:maxLength="38"
         android:maxLines="1"
-        android:paddingEnd="10dp"
-        android:paddingStart="10dp"
+        android:paddingHorizontal="10dp"
         android:paddingTop="20dp"
         android:textColor="@color/my_fon"
         android:textColorHint="@color/grey_fon"
@@ -63,28 +85,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <FrameLayout
-        android:id="@+id/btnSaveNote"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:textAlignment="center"
-        android:background="@color/my_fon"
-        android:backgroundTint="@color/my_fon"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/montserrat_regular"
-            android:textColor="@color/note_book_color_main_fon"
-            android:text="@string/save"/>
-    </FrameLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
