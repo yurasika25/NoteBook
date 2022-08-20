@@ -1,6 +1,5 @@
 package com.notes.easynotebook.fragment
 
-import android.animation.ValueAnimator
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -8,13 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.core.view.marginBottom
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.notes.easynotebook.base.BaseFragment
 import com.notes.easynotebook.R
 import com.notes.easynotebook.adapter.NoteBookAdapter
+import com.notes.easynotebook.base.BaseFragment
 import com.notes.easynotebook.databinding.FragmentMainListBinding
 import com.notes.easynotebook.db.DbManagerNoteBook
 import com.notes.easynotebook.main.MainActivity
@@ -33,9 +31,6 @@ class FragmentMainList : BaseFragment() {
         ft.commit()
     }
 
-    private var fabAnimator: ValueAnimator? = null
-    private var isHideAnimating: Boolean? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dbMangerNoteBook = DbManagerNoteBook(requireContext())
@@ -52,10 +47,11 @@ class FragmentMainList : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        showAndHideFloat()
         init()
         startFragmentAddNote()
         showPrivatePolicy()
+        showAndHideFloat(binding.rv, binding.idFlotEditFragment)
+
     }
 
     private fun showPrivatePolicy() {
@@ -74,37 +70,7 @@ class FragmentMainList : BaseFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        fabAnimator?.cancel()
         _binding = null
-    }
-
-    private fun showAndHideFloat() {
-        binding.rv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                val translationY = if (dy > 0) {
-                    if (isHideAnimating == true) return
-                    isHideAnimating = true
-                    binding.idFlotEditFragment.height + binding.idFlotEditFragment.marginBottom.toFloat()
-                } else {
-                    if (isHideAnimating == false) return
-                    isHideAnimating = false
-                    0f
-                }
-
-                fabAnimator?.cancel()
-                fabAnimator = ValueAnimator.ofFloat(
-                    binding.idFlotEditFragment.translationY, translationY
-                ).apply {
-                    duration = 250L
-
-                    addUpdateListener {
-                        binding.idFlotEditFragment.translationY = it.animatedValue as Float
-                    }
-                    start()
-                }
-            }
-        })
     }
 
     private fun startFragmentAddNote() {

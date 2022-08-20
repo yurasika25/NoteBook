@@ -4,6 +4,14 @@ apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'com.google.firebase.appdistribution'
 apply plugin: 'com.android.application'
 android {
+    signingConfigs {
+        release {
+            storeFile file('E:\\Документи (Е)\\keyStore\\key_store_market.jks')
+            keyAlias 'key_old_lake'
+            storePassword '1234554321sos'
+            keyPassword '1234554321sos'
+        }
+    }
     compileSdkVersion 32
     buildToolsVersion "30.0.3"
 
@@ -11,10 +19,11 @@ android {
         applicationId "com.notes.easynotebook"
         minSdkVersion 23
         targetSdkVersion 32
-        versionCode 6
-        versionName "1.5"
+        versionCode 7
+        versionName "1.6"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.release
     }
     buildFeatures {
         viewBinding true
