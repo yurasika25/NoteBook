@@ -14,9 +14,9 @@ import java.util.*
 class FragmentAddNote : BaseFragment() {
 
     companion object {
-        const val I_TITLE_KEY = "title_key"
-        const val I_DESK_KEY = "desk_key"
-        const val I_ID_KEY = "id_key"
+        const val I_TITLE_KEY = "I_TITLE_KEY"
+        const val I_DESK_KEY = "I_DESK_KEY"
+        const val I_ID_KEY = "I_ID_KEY"
 
         fun newInstance(itemDbListItemNoteBook: DbListItemNoteBook): FragmentAddNote {
             val fragment = FragmentAddNote()
