@@ -51,7 +51,6 @@ class FragmentMainList : BaseFragment() {
         startFragmentAddNote()
         showPrivatePolicy()
         showAndHideFloat(binding.rv, binding.idFlotEditFragment)
-
     }
 
     private fun showPrivatePolicy() {

@@ -8,4 +8,28 @@
         <item name="android:layout_marginStart">10sp</item>
         <item name="android:gravity">center</item>
     </style>
+    <style name="ActionButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:backgroundTint">@color/note_book_color_main_fon</item>
+        <item name="android:background">@drawable/ripple_clickable_effect</item>
+        <item name="android:textSize">34sp </item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">0.5dp</item>
+    </style>
+
+
+    <style name="NumberButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">#F1734B</item>
+        <item name="android:textSize">21sp </item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">0.5dp</item>
+    </style>
+
 </resources>

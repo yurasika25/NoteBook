@@ -6,7 +6,10 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="my_fon">#F6EDE2</color>
+    <color name="color_hint">#8C86AA</color>
     <color name="grey_fon">#C8B1B1B1</color>
     <color name="note_book_color_main">#8C86AA</color>
     <color name="note_book_color_main_fon">#2E294E</color>
+    <color name="note_book_color_darker">#221E39</color>
+    <color name="color_white">#ffffff</color>
 </resources>

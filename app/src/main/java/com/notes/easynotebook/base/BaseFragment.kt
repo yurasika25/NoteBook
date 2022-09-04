@@ -2,6 +2,9 @@ package com.notes.easynotebook.base
 
 import android.animation.ValueAnimator
 import android.content.Context
+import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -20,11 +23,14 @@ abstract class BaseFragment : Fragment() {
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
     }
 
-    fun showToast(message: Int) {
+    protected fun showToast(message: Int) {
+        Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show()
+    }
+    protected  fun showShortToast(message: String) {
         Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show()
     }
 
-    fun hideKeyBoard() {
+    protected  fun hideKeyBoard() {
         val imm: InputMethodManager =
             requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE)
                     as InputMethodManager
@@ -58,5 +64,15 @@ abstract class BaseFragment : Fragment() {
                 }
             }
         })
+    }
+
+
+    protected fun vibratePhone() {
+        val vibrator = context?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        if (Build.VERSION.SDK_INT >= 26) {
+            vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+        } else {
+            vibrator.vibrate(200)
+        }
     }
 }

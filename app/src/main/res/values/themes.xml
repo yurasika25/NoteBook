@@ -4,6 +4,7 @@
         <item name="colorPrimary">@color/note_book_color_main_fon</item>
         <item name="colorPrimaryVariant">@color/black</item>
         <item name="colorOnPrimary">@color/my_fon</item>
+        <item name="dialogCornerRadius">0dp</item>
 
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>

@@ -7,6 +7,7 @@ import com.notes.easynotebook.R
 import com.notes.easynotebook.`fun`.replaceFragment
 import com.notes.easynotebook.fragment.FragmentAddNote
 import com.notes.easynotebook.fragment.FragmentMainList
+import com.notes.easynotebook.password.FragmentPassword
 
 class MainActivity : AppCompatActivity() {
 
@@ -14,16 +15,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
         if (savedInstanceState == null) {
-            goToMainFragment()
+            goToPasswordFragment()
         }
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
     }
 
-    private fun goToMainFragment() {
-        replaceFragment(FragmentMainList(), false)
+    private fun goToPasswordFragment() {
+        replaceFragment(FragmentPassword(), false)
     }
 
     fun goToFragmentAddNote() {
         replaceFragment(FragmentAddNote(), true)
+    }
+    fun goToMainFragment() {
+        replaceFragment(FragmentMainList(), true)
     }
 }
