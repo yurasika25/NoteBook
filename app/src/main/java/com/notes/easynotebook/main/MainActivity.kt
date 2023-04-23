@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.notes.easynotebook.R
 import com.notes.easynotebook.`fun`.replaceFragment
+import com.notes.easynotebook.db.SharedPref
 import com.notes.easynotebook.fragment.FragmentAddNote
 import com.notes.easynotebook.fragment.FragmentMainList
 import com.notes.easynotebook.password.FragmentPassword
@@ -21,13 +22,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun goToPasswordFragment() {
-        replaceFragment(FragmentPassword(), false)
+        if (SharedPref.readPassword(this) == null) {
+            goToMainFragment()
+        } else {
+            replaceFragment(FragmentPassword(), false)
+        }
     }
 
     fun goToFragmentAddNote() {
         replaceFragment(FragmentAddNote(), true)
     }
     fun goToMainFragment() {
-        replaceFragment(FragmentMainList(), true)
+        replaceFragment(FragmentMainList(), false)
     }
 }

@@ -12,6 +12,11 @@
                 android:id="@+id/menu_privacy_policy"
                 android:title="@string/p_pol"
                 app:showAsAction="never" />
+
+            <item
+                android:id="@+id/menu_password"
+                android:title="Password"
+                app:showAsAction="never" />
         </menu>
     </item>
 </menu>
