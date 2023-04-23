@@ -1,38 +1,35 @@
 package com.notes.easynotebook.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.notes.easynotebook.R
+import com.notes.easynotebook.databinding.RsItemBinding
 import com.notes.easynotebook.db.DbListItemNoteBook
 import com.notes.easynotebook.db.DbManagerNoteBook
-import kotlinx.android.synthetic.main.rs_item.view.*
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
-class NoteBookAdapter(private val onItemClicked: (DbListItemNoteBook) -> Unit) :
+class NoteBookAdapter(val onItemClicked: (DbListItemNoteBook) -> Unit) :
     RecyclerView.Adapter<NoteBookAdapter.MyHolder>() {
     private val listMainDbListItemNoteBook: ArrayList<DbListItemNoteBook> = ArrayList()
 
     private val formatter = SimpleDateFormat("dd.MM.yy kk:mm", Locale.getDefault())
 
-    class MyHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    inner class MyHolder(val viewBinding: RsItemBinding) : RecyclerView.ViewHolder(viewBinding.root)
 
     override fun onBindViewHolder(holder: MyHolder, position: Int) {
         val itemList = listMainDbListItemNoteBook[position]
-        holder.itemView.tvTitle.text = itemList.title
-        holder.itemView.id_time.text = formatter.format(itemList.time)
+        holder.viewBinding.tvTitle.text = itemList.title
+        holder.viewBinding.idTime.text = formatter.format(itemList.time)
 
-        holder.itemView.customContainer.setOnClickListener {
+        holder.viewBinding.customContainer.setOnClickListener {
             onItemClicked(itemList)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        return MyHolder(inflater.inflate(R.layout.rs_item, parent, false))
+        val viewBinding = RsItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return MyHolder(viewBinding)
     }
 
     override fun getItemCount(): Int {

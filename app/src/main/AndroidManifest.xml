@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.notes.easynotebook">
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
     <application
         android:allowBackup="true"
         android:fullBackupOnly="true"
@@ -26,11 +28,15 @@
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
+            android:value="com.notes.easynotebook"
             android:resource="@color/purple_700" />
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_logo" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="com.notes.easynotebook"/>
 
         <service
             android:name=".firebase.MyFirebaseMessagingService"

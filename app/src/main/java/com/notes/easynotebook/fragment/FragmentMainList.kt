@@ -61,13 +61,13 @@ class FragmentMainList : BaseFragment() {
     private fun showPrivatePolicy() {
         binding.tbMain.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.menu_privacy_policy -> openPrivatePolice()
+                R.id.menu_privacy_policy -> openPrivacyPolicy()
             }
             true
         }
     }
 
-    private fun openPrivatePolice() {
+    private fun openPrivacyPolicy() {
         val url = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url)))
         startActivity(url)
     }
