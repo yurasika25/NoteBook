@@ -6,9 +6,9 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.notes.easynotebook.R
 import com.notes.easynotebook.`fun`.replaceFragment
 import com.notes.easynotebook.db.SharedPref
-import com.notes.easynotebook.fragment.FragmentAddNote
-import com.notes.easynotebook.fragment.FragmentMainList
-import com.notes.easynotebook.password.FragmentPassword
+import com.notes.easynotebook.ui.FragmentAddNote
+import com.notes.easynotebook.ui.FragmentMainList
+import com.notes.easynotebook.ui.FragmentPassword
 
 class MainActivity : AppCompatActivity() {
 

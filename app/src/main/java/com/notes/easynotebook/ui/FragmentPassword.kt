@@ -1,4 +1,4 @@
-package com.notes.easynotebook.password
+package com.notes.easynotebook.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -61,7 +61,11 @@ class FragmentPassword : BaseFragment() {
         btnCancel.setOnClickListener {
             alertDialog.cancel()
         }
-        editTextPassword.hint = "Create password"
+        if (SharedPref.readPassword(requireContext()) == null) {
+            editTextPassword.hint = "Create password"
+        } else {
+            editTextPassword.hint = "Change password"
+        }
     }
 
     private fun typePassword() {
@@ -87,7 +91,10 @@ class FragmentPassword : BaseFragment() {
             tvPassword.doOnTextChanged { _, _, _, _ ->
                 if (tvPassword.text.toString() == SharedPref.readPassword(requireContext())) {
                     (requireActivity() as MainActivity).goToMainFragment()
-                } else if (tvPassword.text.length > 3 && tvPassword.text.toString() != SharedPref.readPassword(requireContext())) {
+                } else if (tvPassword.text.length > 3 && tvPassword.text.toString() != SharedPref.readPassword(
+                        requireContext()
+                    )
+                ) {
                     showShortToast("Password is incorrect!")
                     vibratePhone()
 
