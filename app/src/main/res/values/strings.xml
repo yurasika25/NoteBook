@@ -9,4 +9,11 @@
     <string name="save_t">Saved</string>
     <string name="p_pol">Privacy Policy</string>
     <string name="url">https://docs.google.com/document/d/1U_Bv73HjvWQJrOsmcKawBxhUehpF7l7np4VHf2MTYyM/edit?usp=sharing</string>
+    <string name="message_reinstall_app">If you forget your passcode, you\'ll need to reinstall the app</string>
+    <string name="re_enter_passcode">Re-enter your passcode</string>
+    <string name="add_new_passcode">Enter new passcode</string>
+    <string name="enter_any_4_digits">Please enter any 4 digits that you will use to unlock your Easy Notebook app</string>
+    <string name="create_a_password">Create a passcode</string>
+    <string name="passcodes_don_t_match_please_try_again">Passcodes don\'t match. Please try again</string>
+    <string name="enter_your_passcode">Enter your Easy NoteBook passcode</string>
 </resources>

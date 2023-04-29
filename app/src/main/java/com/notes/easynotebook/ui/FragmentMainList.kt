@@ -1,4 +1,4 @@
-package com.notes.easynotebook.fragment
+package com.notes.easynotebook.ui
 
 import android.content.Intent
 import android.net.Uri
@@ -6,9 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.FrameLayout
-import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,15 +13,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.notes.easynotebook.R
 import com.notes.easynotebook.adapter.NoteBookAdapter
 import com.notes.easynotebook.base.BaseFragment
-import com.notes.easynotebook.databinding.FragmentMainListBinding
+import com.notes.easynotebook.databinding.FrgMainListBinding
 import com.notes.easynotebook.db.DbManagerNoteBook
-import com.notes.easynotebook.db.SharedPref
 import com.notes.easynotebook.main.MainActivity
 
 class FragmentMainList : BaseFragment() {
 
     private lateinit var dbMangerNoteBook: DbManagerNoteBook
-    private var _binding: FragmentMainListBinding? = null
+    private var _binding: FrgMainListBinding? = null
     private val binding get() = _binding!!
 
     private val noteBookAdapter = NoteBookAdapter { itemList ->
@@ -45,7 +41,7 @@ class FragmentMainList : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentMainListBinding.inflate(inflater, container, false)
+        _binding = FrgMainListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -61,7 +57,8 @@ class FragmentMainList : BaseFragment() {
         binding.tbMain.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menu_privacy_policy -> openPrivacyPolicy()
-                R.id.menu_password -> showPasswordDialog()
+                R.id.menu_password -> (requireActivity() as MainActivity).goToPasscodeLockFragment()
+
             }
             true
         }
@@ -70,40 +67,6 @@ class FragmentMainList : BaseFragment() {
     private fun openPrivacyPolicy() {
         val url = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url)))
         startActivity(url)
-    }
-
-
-    private fun showPasswordDialog() {
-        val dialogBuilder = AlertDialog.Builder(requireContext())
-        val dialogView = layoutInflater.inflate(R.layout.alert_password_dialog, null)
-        val editTextPassword = dialogView.findViewById<EditText>(R.id.titlePasswordDialog)
-        val btnSave = dialogView.findViewById<FrameLayout>(R.id.btnSavePassword)
-        val btnCancel = dialogView.findViewById<FrameLayout>(R.id.btnCancelPassword)
-
-        dialogBuilder.setView(dialogView)
-        val alertDialog = dialogBuilder.create()
-        alertDialog.show()
-        alertDialog.setCanceledOnTouchOutside(false)
-
-        btnSave.setOnClickListener {
-            val textPassword: String = editTextPassword.text.toString()
-            if (editTextPassword.text.isEmpty() || editTextPassword.text.length < 4) {
-                showShortToast("Enter 4 digits")
-                vibratePhone()
-            } else {
-                SharedPref.setPassword(requireContext(), textPassword)
-                alertDialog.cancel()
-                showShortToast("Password is saved")
-            }
-        }
-        btnCancel.setOnClickListener {
-            alertDialog.cancel()
-        }
-        if (SharedPref.readPassword(requireContext()) == null) {
-            editTextPassword.hint = "Create password"
-        } else {
-            editTextPassword.hint = "Change password"
-        }
     }
 
     override fun onDestroyView() {

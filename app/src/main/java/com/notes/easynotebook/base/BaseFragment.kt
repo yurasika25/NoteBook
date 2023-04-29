@@ -67,10 +67,10 @@ abstract class BaseFragment : Fragment() {
     }
 
 
-    protected fun vibratePhone() {
+    protected fun vibratePhone(time: Long = 160) {
         val vibrator = context?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         if (Build.VERSION.SDK_INT >= 26) {
-            vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+            vibrator.vibrate(time.let { VibrationEffect.createOneShot(it, VibrationEffect.DEFAULT_AMPLITUDE) })
         } else {
             vibrator.vibrate(200)
         }

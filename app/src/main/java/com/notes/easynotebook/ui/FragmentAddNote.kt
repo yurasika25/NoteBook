@@ -1,4 +1,4 @@
-package com.notes.easynotebook.fragment
+package com.notes.easynotebook.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater

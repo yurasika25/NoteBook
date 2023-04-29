@@ -10,4 +10,11 @@
     <string name="title">Moje notatki</string>
     <string name="add_note">Dodaj notatkę</string>
     <string name="url">https://docs.google.com/document/d/1cfKwDAtcw7BbXzx7HYJVRyM3UadNw1_ovpgfMWOR8Dc/edit?usp=sharing</string>
+    <string name="message_reinstall_app">Jeśli zapomnisz kodu blokady, będziesz musiał ponownie zainstalować aplikację</string>
+    <string name="re_enter_passcode">Powtórz kod blokady</string>
+    <string name="add_new_passcode">Wprowadź nowy kod blokady</string>
+    <string name="enter_any_4_digits">Wymyśl 4 numery, które chcesz odblokować Easy NoteBook</string>
+    <string name="create_a_password">Utwórz kod blokady</string>
+    <string name="passcodes_don_t_match_please_try_again">Kody się nie zgadzają. Spróbuj ponownie</string>
+    <string name="enter_your_passcode">Wprowadź kod blokady Easy NoteBook</string>
 </resources>
