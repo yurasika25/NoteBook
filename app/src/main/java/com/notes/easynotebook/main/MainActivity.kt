@@ -31,12 +31,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun goToFragmentAddNote() {
-        replaceFragment(FragmentAddNote(), true)
+        replaceFragment(FragmentAddNote(), addStack = true, isAnimation = true)
     }
     fun goToMainFragment() {
         replaceFragment(FragmentMainList(), false)
     }
     fun goToPasscodeLockFragment() {
-        replaceFragment(FragmentAddPassword(), true, isAnimation = true)
+        replaceFragment(FragmentAddPassword(), addStack = true, isAnimation = true)
     }
 }

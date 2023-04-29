@@ -4,11 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import com.notes.easynotebook.R
 import com.notes.easynotebook.base.BaseFragment
 import com.notes.easynotebook.databinding.FragmentAddNoteBinding
 import com.notes.easynotebook.db.DbListItemNoteBook
 import com.notes.easynotebook.db.DbManagerNoteBook
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.*
 
 class FragmentAddNote : BaseFragment() {
@@ -57,7 +61,11 @@ class FragmentAddNote : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         getBundleData()
         if (_id == null && savedInstanceState == null) {
-            showKeyBoard()
+            lifecycleScope.launch {
+                Dispatchers.IO
+                delay(300)
+                showKeyBoard()
+            }
             binding.titleText.requestFocus()
         }
 

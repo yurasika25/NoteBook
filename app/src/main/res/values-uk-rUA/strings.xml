@@ -18,4 +18,5 @@
     <string name="passcodes_don_t_match_please_try_again">Коди не збігаються. Спробуйте ще раз</string>
     <string name="enter_your_passcode">Введіть код блокування Easy NoteBook</string>
     <string name="incorrect_passcode">Не правильний код блокування!</string>
+    <string name="passcode_lock">Блокування паролем</string>
 </resources>
