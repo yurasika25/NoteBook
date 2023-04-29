@@ -11,11 +11,13 @@
             <item
                 android:id="@+id/menu_privacy_policy"
                 android:title="@string/p_pol"
+                android:contentDescription="@string/p_pol"
                 app:showAsAction="never" />
 
             <item
                 android:id="@+id/menu_password"
-                android:title="Passcode Lock"
+                android:contentDescription="@string/passcode_lock"
+                android:title="@string/passcode_lock"
                 app:showAsAction="never" />
         </menu>
     </item>

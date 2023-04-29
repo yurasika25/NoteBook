@@ -11,6 +11,7 @@ import android.widget.EditText
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.coroutineScope
+import androidx.lifecycle.lifecycleScope
 import com.notes.easynotebook.R
 import com.notes.easynotebook.base.BaseFragment
 import com.notes.easynotebook.databinding.FrgAddPasswordBinding
@@ -42,7 +43,11 @@ class FragmentAddPassword : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
-            showKeyBoard()
+            lifecycleScope.launch {
+                Dispatchers.IO
+                delay(300)
+                showKeyBoard()
+            }
             etOtp1.requestFocus()
             focusNextEdit(etOtp1, etOtp2)
             focusNextEdit(etOtp2, etOtp3)

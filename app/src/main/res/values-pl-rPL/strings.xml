@@ -18,4 +18,5 @@
     <string name="passcodes_don_t_match_please_try_again">Kody się nie zgadzają. Spróbuj ponownie</string>
     <string name="enter_your_passcode">Wprowadź kod blokady Easy NoteBook</string>
     <string name="incorrect_passcode">Hasło jest nieprawidłowe!</string>
+    <string name="passcode_lock">Blokada hasłem</string>
 </resources>
