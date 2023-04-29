@@ -49,11 +49,8 @@ class FragmentMainList : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         init()
         startFragmentAddNote()
-        showPrivatePolicy()
         showAndHideFloat(binding.rv, binding.idFlotEditFragment)
-    }
 
-    private fun showPrivatePolicy() {
         binding.tbMain.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menu_privacy_policy -> openPrivacyPolicy()

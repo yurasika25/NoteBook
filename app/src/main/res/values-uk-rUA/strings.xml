@@ -19,4 +19,9 @@
     <string name="enter_your_passcode">Введіть код блокування Easy NoteBook</string>
     <string name="incorrect_passcode">Не правильний код блокування!</string>
     <string name="passcode_lock">Блокування паролем</string>
+    <string name="delete_passcode">Видалити код блокування</string>
+    <string name="delete_passcode_successful">Код блокування видалено успішно</string>
+    <string name="sure_delete_passcode">Ви впевнені, що хочете видалити код блокування Easy NoteBook?</string>
+    <string name="delete">Видалити</string>
+    <string name="cancel">Скасувати</string>
 </resources>

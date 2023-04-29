@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.coroutineScope
@@ -22,14 +23,12 @@ import kotlinx.coroutines.launch
 
 class FragmentAddPassword : BaseFragment() {
 
-    private var shake: Animation? = null
-
-    private var _binding: FrgAddPasswordBinding? = null
-    private val binding get() = _binding!!
-
-    private var isFirstAttempt = true
-
     private val viewModel by lazy { PasswordViewModel() }
+    private var _binding: FrgAddPasswordBinding? = null
+    private var mDialog: AlertDialog? = null
+    private val binding get() = _binding!!
+    private var shake: Animation? = null
+    private var isFirstAttempt = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,6 +47,7 @@ class FragmentAddPassword : BaseFragment() {
                 delay(300)
                 showKeyBoard()
             }
+
             etOtp1.requestFocus()
             focusNextEdit(etOtp1, etOtp2)
             focusNextEdit(etOtp2, etOtp3)
@@ -75,10 +75,31 @@ class FragmentAddPassword : BaseFragment() {
                 tvTitlePassword.text = getString(R.string.add_new_passcode)
             }
 
-            tbMain.setNavigationOnClickListener {
+            tbDeletePasscode.setNavigationOnClickListener {
                 requireActivity().onBackPressedDispatcher.onBackPressed()
             }
+
+            tbDeletePasscode.setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.menu_delete -> showConfirmDialog()
+                }
+                true
+            }
         }
+    }
+
+    private fun showConfirmDialog() {
+        mDialog = AlertDialog.Builder(requireContext())
+            .setTitle(R.string.delete_passcode)
+            .setMessage(getString(R.string.sure_delete_passcode))
+            .setNegativeButton(R.string.cancel) { _, _ -> mDialog?.dismiss() }
+            .setPositiveButton(R.string.delete) { _, _ ->
+                SharedPref.setPassword(requireContext(), null)
+                showShortToast(getString(R.string.delete_passcode_successful))
+                requireActivity().onBackPressedDispatcher.onBackPressed()
+            }
+            .create()
+        mDialog?.show()
     }
 
     class GenericKeyEvent internal constructor(
@@ -109,23 +130,30 @@ class FragmentAddPassword : BaseFragment() {
             if (viewModel.password == viewModel.passwordRepeat) {
                 SharedPref.setPassword(requireContext(), viewModel.password)
 
-                lifecycle.coroutineScope.launch { Dispatchers.IO
+                lifecycleScope.launch {
+                    Dispatchers.IO
                     setBackgroundInput(etOtp1, R.drawable.password_input_correct)
                 }
-                lifecycle.coroutineScope.launch { Dispatchers.IO
+
+                lifecycleScope.launch {
+                    Dispatchers.IO
                     delay(60)
                     setBackgroundInput(etOtp2, R.drawable.password_input_correct)
                 }
-                lifecycle.coroutineScope.launch { Dispatchers.IO
+
+                lifecycleScope.launch {
+                    Dispatchers.IO
                     delay(120)
                     setBackgroundInput(etOtp3, R.drawable.password_input_correct)
                 }
-                lifecycle.coroutineScope.launch { Dispatchers.IO
+
+                lifecycleScope.launch {
+                    Dispatchers.IO
                     delay(180)
                     setBackgroundInput(etOtp4, R.drawable.password_input_correct)
                 }
 
-                lifecycle.coroutineScope.launch {
+                lifecycleScope.launch {
                     Dispatchers.IO
                     delay(550)
                     hideKeyBoard()

@@ -4,9 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.FrameLayout
-import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doOnTextChanged
 import com.notes.easynotebook.R
 import com.notes.easynotebook.base.BaseFragment
@@ -30,21 +27,20 @@ class FragmentPassword : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         typePassword()
-
     }
 
     private fun typePassword() {
         binding.apply {
-            btn1.setOnClickListener { setTextField("1") }
-            btn2.setOnClickListener { setTextField("2") }
-            btn3.setOnClickListener { setTextField("3") }
-            btn4.setOnClickListener { setTextField("4") }
-            btn5.setOnClickListener { setTextField("5") }
-            btn6.setOnClickListener { setTextField("6") }
-            btn7.setOnClickListener { setTextField("7") }
-            btn8.setOnClickListener { setTextField("8") }
-            btn9.setOnClickListener { setTextField("9") }
-            btn0.setOnClickListener { setTextField("0") }
+            btn1.setOnClickListener { setTextField(getString(R.string._1)) }
+            btn2.setOnClickListener { setTextField(getString(R.string._2)) }
+            btn3.setOnClickListener { setTextField(getString(R.string._3)) }
+            btn4.setOnClickListener { setTextField(getString(R.string._4)) }
+            btn5.setOnClickListener { setTextField(getString(R.string._5)) }
+            btn6.setOnClickListener { setTextField(getString(R.string._6)) }
+            btn7.setOnClickListener { setTextField(getString(R.string._7)) }
+            btn8.setOnClickListener { setTextField(getString(R.string._8)) }
+            btn9.setOnClickListener { setTextField(getString(R.string._9)) }
+            btn0.setOnClickListener { setTextField(getString(R.string._0)) }
 
             deleteBtn.setOnClickListener {
                 val str = tvPassword.text.toString()
@@ -62,7 +58,6 @@ class FragmentPassword : BaseFragment() {
                 ) {
                     showShortToast(getString(R.string.incorrect_passcode))
                     vibratePhone()
-
                 }
             }
         }
