@@ -16,4 +16,5 @@
     <string name="create_a_password">Create a passcode</string>
     <string name="passcodes_don_t_match_please_try_again">Passcodes don\'t match. Please try again</string>
     <string name="enter_your_passcode">Enter your Easy NoteBook passcode</string>
+    <string name="incorrect_passcode">Passcode is incorrect!</string>
 </resources>
