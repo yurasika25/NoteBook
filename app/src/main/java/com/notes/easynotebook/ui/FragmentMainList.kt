@@ -106,8 +106,8 @@ class FragmentMainList : BaseFragment() {
     }
 
     private fun getSwapMg(): ItemTouchHelper {
-        return ItemTouchHelper(object : ItemTouchHelper.
-        SimpleCallback(0, ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT) {
+        return ItemTouchHelper(object :
+            ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT) {
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
@@ -123,4 +123,3 @@ class FragmentMainList : BaseFragment() {
         })
     }
 }
-

@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.notes.easynotebook.base.BaseFragment
 import com.notes.easynotebook.R
+import com.notes.easynotebook.base.BaseFragment
 import com.notes.easynotebook.databinding.FragmentAddNoteBinding
 import com.notes.easynotebook.db.DbListItemNoteBook
 import com.notes.easynotebook.db.DbManagerNoteBook
