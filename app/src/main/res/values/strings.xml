@@ -34,4 +34,5 @@
     <string name="_2" translatable="false">2</string>
     <string name="_1" translatable="false">1</string>
     <string name="clear_field" translatable="false">Clear field</string>
+    <string name="menu" translatable="false">Menu</string>
 </resources>

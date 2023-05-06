@@ -42,6 +42,7 @@
         android:clipToPadding="false"
         android:paddingBottom="8dp"
         android:scrollbars="vertical"
+        android:contentDescription="@string/title"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,10 +56,11 @@
         android:layout_margin="16dp"
         android:clickable="true"
         android:focusable="true"
+        android:contentDescription="@string/add_note"
         app:backgroundTint="@color/easy_notebook_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_add"
-        tools:ignore="ContentDescription,SpeakableTextPresentCheck,ImageContrastCheck" />
+        tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

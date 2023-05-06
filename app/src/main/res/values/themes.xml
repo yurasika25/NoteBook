@@ -40,7 +40,7 @@
     <style name="NoteBookAlertDialogPositiveButton" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
         <item name="fontFamily">@font/montserrat_regular</item>
         <item name="android:textSize">15sp</item>
-        <item name="android:textColor">#00ADEE</item>
-        <item name="rippleColor">#A300ADEE</item>
+        <item name="android:textColor">@color/note_book_color_main_fon</item>
+        <item name="rippleColor">@color/note_book_color_main_fon</item>
     </style>
 </resources>
