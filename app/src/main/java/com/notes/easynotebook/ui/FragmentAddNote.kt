@@ -86,7 +86,7 @@ class FragmentAddNote : BaseFragment() {
         if (myTitle != "" && myDesk != "") {
             showToast(R.string.save_t)
             hideKeyBoard()
-            requireActivity().onBackPressed()
+            requireActivity().onBackPressedDispatcher.onBackPressed()
         } else
             showToast(R.string.f_toast)
     }
