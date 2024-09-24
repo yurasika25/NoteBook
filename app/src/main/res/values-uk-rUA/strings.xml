@@ -7,8 +7,6 @@
     <string name="name">Блокнот</string>
     <string name="f_toast">Заповніть усі поля</string>
     <string name="save_t">Збережено</string>
-    <string name="p_pol">Політика конфіденційності</string>
-    <string name="url">https://docs.google.com/document/d/10TEwMYse6gjKO9kqzLW2RuXQ0H_o-05H_CynEl4R7ho/edit?usp=sharing</string>
     <string name="t_name">Введіть назву</string>
     <string name="message_reinstall_app">Якщо ви забудете код блокування, необхідно буде переустановити застосунок</string>
     <string name="re_enter_passcode">Повторіть код блокування</string>
@@ -24,4 +22,6 @@
     <string name="sure_delete_passcode">Ви впевнені, що хочете видалити код блокування Easy NoteBook?</string>
     <string name="delete">Видалити</string>
     <string name="cancel">Скасувати</string>
+    <string name="are_you_sure_you_want_to_delete_this_note">Ви впевнені, що хочете видалити цю нотатку?</string>
+    <string name="ok">Добре</string>
 </resources>

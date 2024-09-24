@@ -7,8 +7,6 @@
     <string name="empty">Add your notes</string>
     <string name="f_toast">You must fill all fields</string>
     <string name="save_t">Saved</string>
-    <string name="p_pol">Privacy Policy</string>
-    <string name="url">https://docs.google.com/document/d/1U_Bv73HjvWQJrOsmcKawBxhUehpF7l7np4VHf2MTYyM/edit?usp=sharing</string>
     <string name="message_reinstall_app">If you forget your passcode, you\'ll need to reinstall the app</string>
     <string name="re_enter_passcode">Re-enter your passcode</string>
     <string name="add_new_passcode">Enter new passcode</string>
@@ -35,4 +33,6 @@
     <string name="_1" translatable="false">1</string>
     <string name="clear_field" translatable="false">Clear field</string>
     <string name="menu" translatable="false">Menu</string>
+    <string name="are_you_sure_you_want_to_delete_this_note">Are you sure you want to delete this note?</string>
+    <string name="ok">Ok</string>
 </resources>

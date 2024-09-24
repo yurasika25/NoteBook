@@ -1,11 +1,10 @@
 package com.notes.easynotebook.ui
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -53,17 +52,11 @@ class FragmentMainList : BaseFragment() {
 
         binding.tbMain.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.menu_privacy_policy -> openPrivacyPolicy()
                 R.id.menu_password -> (requireActivity() as MainActivity).goToPasscodeLockFragment()
 
             }
             true
         }
-    }
-
-    private fun openPrivacyPolicy() {
-        val url = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url)))
-        startActivity(url)
     }
 
     override fun onDestroyView() {
@@ -114,9 +107,24 @@ class FragmentMainList : BaseFragment() {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                noteBookAdapter.removeItem(viewHolder.adapterPosition, dbMangerNoteBook)
-                binding.tvEmpty.isVisible = noteBookAdapter.itemCount == 0
+                showDialog(viewHolder.adapterPosition, dbMangerNoteBook)
             }
         })
+    }
+
+    private fun showDialog(adapterPosition: Int, dbMangerNoteBook: DbManagerNoteBook) {
+        val alertDialog: AlertDialog.Builder = AlertDialog.Builder(requireActivity())
+        alertDialog.setTitle(getString(R.string.delete))
+        alertDialog.setMessage(getString(R.string.are_you_sure_you_want_to_delete_this_note))
+        alertDialog.setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
+            dialog.dismiss()
+            noteBookAdapter.notifyItemChanged(adapterPosition)
+        }
+        alertDialog.setPositiveButton(getString(R.string.ok)) { dialog, _ ->
+            dialog.dismiss()
+            noteBookAdapter.removeItem(adapterPosition, dbMangerNoteBook)
+            binding.tvEmpty.isVisible = noteBookAdapter.itemCount == 0
+        }
+        alertDialog.create().show()
     }
 }
