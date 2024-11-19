@@ -1,14 +1,25 @@
 package com.notes.easynotebook.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.play.core.appupdate.AppUpdateInfo
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.appupdate.AppUpdateOptions
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.UpdateAvailability
 import com.notes.easynotebook.R
 import com.notes.easynotebook.adapter.NoteBookAdapter
 import com.notes.easynotebook.base.BaseFragment
@@ -19,8 +30,9 @@ import com.notes.easynotebook.main.MainActivity
 class FragmentMainList : BaseFragment() {
 
     private lateinit var dbMangerNoteBook: DbManagerNoteBook
-    private var _binding: FrgMainListBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FrgMainListBinding
+
+    private var activityResultLauncher: ActivityResultLauncher<IntentSenderRequest>? = null
 
     private val noteBookAdapter = NoteBookAdapter { itemList ->
         val fm = requireActivity().supportFragmentManager
@@ -34,13 +46,48 @@ class FragmentMainList : BaseFragment() {
         super.onCreate(savedInstanceState)
         dbMangerNoteBook = DbManagerNoteBook(requireContext())
         dbMangerNoteBook.openDb()
+        checkForAppUpdate()
+    }
+
+    private fun checkForAppUpdate() {
+        val appUpdateManager = AppUpdateManagerFactory.create(requireContext())
+        val appUpdateInfoTask = appUpdateManager.appUpdateInfo
+        appUpdateInfoTask.addOnSuccessListener { appUpdateInfo: AppUpdateInfo ->
+            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+                && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)
+            ) {
+                try {
+                    activityResultLauncher?.let {
+                        appUpdateManager.startUpdateFlowForResult(
+                            appUpdateInfo,
+                            it,
+                            AppUpdateOptions.newBuilder(AppUpdateType.IMMEDIATE).build()
+                        )
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        }
+
+        try {
+            activityResultLauncher = registerForActivityResult(
+                ActivityResultContracts.StartIntentSenderForResult()
+            ) { result: ActivityResult ->
+                if (result.resultCode != AppCompatActivity.RESULT_OK) {
+                    Log.d("message", "Update flow failed")
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FrgMainListBinding.inflate(inflater, container, false)
+        binding = FrgMainListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -49,7 +96,6 @@ class FragmentMainList : BaseFragment() {
         init()
         startFragmentAddNote()
         showAndHideFloat(binding.rv, binding.idFlotEditFragment)
-
         binding.tbMain.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menu_password -> (requireActivity() as MainActivity).goToPasscodeLockFragment()
@@ -57,11 +103,6 @@ class FragmentMainList : BaseFragment() {
             }
             true
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun startFragmentAddNote() {
