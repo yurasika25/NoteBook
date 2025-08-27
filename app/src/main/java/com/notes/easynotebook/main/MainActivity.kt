@@ -3,6 +3,9 @@ package com.notes.easynotebook.main
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import com.notes.easynotebook.R
 import com.notes.easynotebook.`fun`.replaceFragment
 import com.notes.easynotebook.db.SharedPref
@@ -16,6 +19,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
+        WindowCompat.enableEdgeToEdge(window)
         if (savedInstanceState == null) {
             goToPasswordFragment()
         }

@@ -25,6 +25,7 @@ import com.notes.easynotebook.adapter.NoteBookAdapter
 import com.notes.easynotebook.base.BaseFragment
 import com.notes.easynotebook.databinding.FrgMainListBinding
 import com.notes.easynotebook.db.DbManagerNoteBook
+import com.notes.easynotebook.`fun`.applySystemBarsInsets
 import com.notes.easynotebook.main.MainActivity
 
 class FragmentMainList : BaseFragment() {
@@ -103,6 +104,7 @@ class FragmentMainList : BaseFragment() {
             }
             true
         }
+        binding.mainContainer.applySystemBarsInsets()
     }
 
     private fun startFragmentAddNote() {
@@ -155,17 +157,20 @@ class FragmentMainList : BaseFragment() {
 
     private fun showDialog(adapterPosition: Int, dbMangerNoteBook: DbManagerNoteBook) {
         val alertDialog: AlertDialog.Builder = AlertDialog.Builder(requireActivity())
-        alertDialog.setTitle(getString(R.string.delete))
-        alertDialog.setMessage(getString(R.string.are_you_sure_you_want_to_delete_this_note))
-        alertDialog.setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
-            dialog.dismiss()
-            noteBookAdapter.notifyItemChanged(adapterPosition)
+        alertDialog.apply {
+            setTitle(getString(R.string.delete))
+            setMessage(getString(R.string.are_you_sure_you_want_to_delete_this_note))
+            setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
+                dialog.dismiss()
+                noteBookAdapter.notifyItemChanged(adapterPosition)
+            }
+            setPositiveButton(getString(R.string.ok)) { dialog, _ ->
+                dialog.dismiss()
+                noteBookAdapter.removeItem(adapterPosition, dbMangerNoteBook)
+                binding.tvEmpty.isVisible = noteBookAdapter.itemCount == 0
+            }
+            setCancelable(false)
+            create().show()
         }
-        alertDialog.setPositiveButton(getString(R.string.ok)) { dialog, _ ->
-            dialog.dismiss()
-            noteBookAdapter.removeItem(adapterPosition, dbMangerNoteBook)
-            binding.tvEmpty.isVisible = noteBookAdapter.itemCount == 0
-        }
-        alertDialog.create().show()
     }
 }

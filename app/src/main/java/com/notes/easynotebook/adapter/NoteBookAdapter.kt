@@ -6,14 +6,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.notes.easynotebook.databinding.RsItemBinding
 import com.notes.easynotebook.db.DbListItemNoteBook
 import com.notes.easynotebook.db.DbManagerNoteBook
-import java.text.SimpleDateFormat
+import com.notes.easynotebook.utils.DateFormatter.formatter
 import java.util.*
 
 class NoteBookAdapter(val onItemClicked: (DbListItemNoteBook) -> Unit) :
     RecyclerView.Adapter<NoteBookAdapter.MyHolder>() {
     private val listMainDbListItemNoteBook: ArrayList<DbListItemNoteBook> = ArrayList()
 
-    private val formatter = SimpleDateFormat("dd.MM.yy kk:mm", Locale.getDefault())
 
     inner class MyHolder(val viewBinding: RsItemBinding) : RecyclerView.ViewHolder(viewBinding.root)
 

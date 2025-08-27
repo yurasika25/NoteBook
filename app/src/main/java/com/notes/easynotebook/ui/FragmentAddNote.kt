@@ -25,9 +25,11 @@ class FragmentAddNote : BaseFragment() {
         fun newInstance(itemDbListItemNoteBook: DbListItemNoteBook): FragmentAddNote {
             val fragment = FragmentAddNote()
             val bundle = Bundle()
-            bundle.putString(I_TITLE_KEY, itemDbListItemNoteBook.title)
-            bundle.putString(I_DESK_KEY, itemDbListItemNoteBook.desc)
-            bundle.putInt(I_ID_KEY, itemDbListItemNoteBook.id)
+            bundle.apply {
+                putString(I_TITLE_KEY, itemDbListItemNoteBook.title)
+                putString(I_DESK_KEY, itemDbListItemNoteBook.desc)
+                putInt(I_ID_KEY, itemDbListItemNoteBook.id)
+            }
             fragment.arguments = bundle
             return fragment
         }
