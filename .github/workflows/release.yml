@@ -33,7 +33,14 @@ jobs:
         run: ./gradlew :app:bundleRelease
 
       - name: Publish to Play (internal track)
-        run: ./gradlew :app:publishRelease \
-          -Pplay.serviceAccountCredentials=play-credentials.json \
-          -Pplay.track=internal \
-          -Pplay.releaseStatus=completed
+        run: |
+          ./gradlew :app:publishReleaseBundle \
+            -Pplay.serviceAccountCredentials=play-credentials.json \
+            -Pplay.track=internal \
+            -Pplay.releaseStatus=completed
+
+      - name: Upload AAB as artifact (optional)
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-bundle
+          path: app/build/outputs/bundle/release/*.aab
