@@ -24,8 +24,11 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
-      - name: Create Play credentials file
-        run: echo "$PLAY_PUBLISHER_JSON" > play-credentials.json
+      - name: Write Play credentials to file
+        run: |
+          printf '%s' "$PLAY_PUBLISHER_JSON" > "$GITHUB_WORKSPACE/app/play-credentials.json"
+          ls -l "$GITHUB_WORKSPACE/app/play-credentials.json"
+          test -s "$GITHUB_WORKSPACE/app/play-credentials.json"
         env:
           PLAY_PUBLISHER_JSON: ${{ secrets.PLAY_PUBLISHER_JSON }}
 
@@ -33,9 +36,11 @@ jobs:
         run: ./gradlew :app:bundleRelease
 
       - name: Publish to Play (internal track)
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/app/play-credentials.json
         run: |
           ./gradlew :app:publishReleaseBundle \
-            -Pplay.serviceAccountCredentials=play-credentials.json \
+            -Pplay.serviceAccountCredentials=${{ github.workspace }}/app/play-credentials.json \
             -Pplay.track=internal \
             -Pplay.releaseStatus=completed
 
