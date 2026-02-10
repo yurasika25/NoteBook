@@ -12,4 +12,22 @@
     <color name="note_book_color_main_fon">#2E294E</color>
     <color name="note_book_color_darker">#221E39</color>
     <color name="color_white">#ffffff</color>
+    <color name="transparent">#00000000</color>
+    <color name="rate_dialog_surface">#1B1B1F</color>
+
+    <color name="rate_dialog_text_primary">#E6E1E5</color>
+    <color name="rate_dialog_accent">#8AB4F8</color>
+    <color name="rate_dialog_outline">#3A3A40</color>
+
+    <color name="rate_surface">#161A2B</color>
+    <color name="rate_stroke">#2A2F52</color>
+    <color name="rate_text_primary">#F2F4FF</color>
+    <color name="rate_text_secondary">#B8BEE6</color>
+
+    <color name="rate_accent">#7C5CFF</color>
+    <color name="rate_on_accent">#FFFFFF</color>
+
+    <color name="rate_tonal">#262B52</color>
+    <color name="rate_on_tonal">#E8EAFF</color>
+
 </resources>

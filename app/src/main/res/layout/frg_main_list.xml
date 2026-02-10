@@ -2,66 +2,75 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:id="@+id/mainContainer"
-    android:layout_height="match_parent"
-    android:background="@color/note_book_color_main_fon">
-
-    <TextView
-        android:id="@+id/tvEmpty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="false"
-        android:focusable="false"
-        android:fontFamily="@font/montserrat_regular"
-        android:text="@string/empty"
-        android:textColor="@color/easy_notebook_background"
-        android:textSize="19sp"
-        app:layout_constraintBottom_toBottomOf="@+id/rv"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="TextContrastCheck" />
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tbMain"
         android:layout_width="match_parent"
         android:layout_height="52dp"
-        android:background="@color/easy_notebook_background"
+        android:background="@color/note_book_color_main_fon"
         android:elevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:menu="@menu/menu"
         app:title="@string/title"
-        app:titleTextColor="@color/note_book_color_main_fon" />
+        app:titleTextColor="@color/easy_notebook_background" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv"
-        android:layout_width="0dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:clipToPadding="false"
-        android:paddingBottom="8dp"
-        android:scrollbars="vertical"
-        android:contentDescription="@string/title"
+        android:background="@color/note_book_color_main_fon"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tbMain"
-        tools:listitem="@layout/rs_item" />
+        tools:layout_editor_absoluteX="0dp">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/id_flot_edit_fragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:contentDescription="@string/add_note"
-        app:backgroundTint="@color/easy_notebook_background"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_add"
-        tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
+        <TextView
+            android:id="@+id/tvEmpty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:focusable="false"
+            android:fontFamily="@font/montserrat_regular"
+            android:text="@string/empty"
+            android:textColor="@color/easy_notebook_background"
+            android:textSize="19sp"
+            app:layout_constraintBottom_toBottomOf="@+id/rv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="TextContrastCheck" />
 
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clipToPadding="false"
+            android:contentDescription="@string/title"
+            android:paddingBottom="8dp"
+            android:scrollbars="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/rs_item" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/id_flot_edit_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:clickable="true"
+            android:contentDescription="@string/add_note"
+            android:focusable="true"
+            app:backgroundTint="@color/easy_notebook_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_add"
+            tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="name">Prosty notatnik</string>
+    <string name="name">Prosty Notatnik</string>
     <string name="t_name">Wpisz imię</string>
     <string name="save_t">Zapisane</string>
     <string name="f_toast">Wypełnij wszystkie pola</string>
@@ -16,12 +16,20 @@
     <string name="passcodes_don_t_match_please_try_again">Kody się nie zgadzają. Spróbuj ponownie</string>
     <string name="enter_your_passcode">Wprowadź kod blokady Easy NoteBook</string>
     <string name="incorrect_passcode">Hasło jest nieprawidłowe!</string>
-    <string name="passcode_lock">Blokada hasłem</string>
+    <string name="passcode_lock">Blokada Hasłem</string>
     <string name="delete_passcode">Usuń hasło</string>
     <string name="delete">Usuwać</string>
     <string name="cancel">Anulować</string>
     <string name="delete_passcode_successful">Hasło usunięte pomyślnie</string>
     <string name="sure_delete_passcode">Czy na pewno chcesz usunąć hasło Easy NoteBook?</string>
     <string name="are_you_sure_you_want_to_delete_this_note">Czy na pewno chcesz usunąć tę notatkę??</string>
-    <string name="ok">Dobrze</string>
+    <string name="ok">Tak</string>
+    <string name="new_note">Nowa Notatka</string>
+    <string name="edit_note">Notatka</string>
+    <string name="support_the_app">Wesprzyj aplikację</string>
+    <string name="enjoying_the_app">Podoba Ci się aplikacja?</string>
+    <string name="if_you_like_it">Jeśli Ci się podoba, poświęć chwilę, aby ocenić nas w Google Play. To bardzo pomaga.</string>
+    <string name="rate_on_google_play">Oceń w Google Play</string>
+    <string name="later">Później</string>
+    <string name="no_thanks">Nie, dziękuję</string>
 </resources>

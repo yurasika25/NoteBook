@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="title">Мої нотатки</string>
+    <string name="title">Мої Нотатки</string>
     <string name="save">Зберегти</string>
     <string name="add_note">Додайте нотатку</string>
     <string name="empty">Додайте свої нотатки</string>
@@ -16,12 +16,20 @@
     <string name="passcodes_don_t_match_please_try_again">Коди не збігаються. Спробуйте ще раз</string>
     <string name="enter_your_passcode">Введіть код блокування Easy NoteBook</string>
     <string name="incorrect_passcode">Не правильний код блокування!</string>
-    <string name="passcode_lock">Блокування паролем</string>
+    <string name="passcode_lock">Блокування Паролем</string>
     <string name="delete_passcode">Видалити код блокування</string>
     <string name="delete_passcode_successful">Код блокування видалено успішно</string>
     <string name="sure_delete_passcode">Ви впевнені, що хочете видалити код блокування Easy NoteBook?</string>
     <string name="delete">Видалити</string>
     <string name="cancel">Скасувати</string>
     <string name="are_you_sure_you_want_to_delete_this_note">Ви впевнені, що хочете видалити цю нотатку?</string>
-    <string name="ok">Добре</string>
+    <string name="ok">Так</string>
+    <string name="new_note">Нова Нотатка</string>
+    <string name="edit_note">Нотатка</string>
+    <string name="support_the_app">Підтримай застосунок</string>
+    <string name="enjoying_the_app">Подобається застосунок?</string>
+    <string name="if_you_like_it">Якщо вам подобається застосунок, будь ласка, знайдіть хвилинку, щоб оцінити нас у Google Play. Це дуже допомагає.</string>
+    <string name="rate_on_google_play">Оцінити в Google Play</string>
+    <string name="later">Пізніше</string>
+    <string name="no_thanks">Ні, дякую</string>
 </resources>

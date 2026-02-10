@@ -27,8 +27,14 @@ import com.notes.easynotebook.databinding.FrgMainListBinding
 import com.notes.easynotebook.db.DbManagerNoteBook
 import com.notes.easynotebook.`fun`.applySystemBarsInsets
 import com.notes.easynotebook.main.MainActivity
+import com.notes.easynotebook.core.storage.RatePrefs
 
 class FragmentMainList : BaseFragment() {
+
+
+    private val ratePrompter by lazy {
+        RatePrompter(RatePrefs(requireContext().applicationContext))
+    }
 
     private lateinit var dbMangerNoteBook: DbManagerNoteBook
     private lateinit var binding: FrgMainListBinding
@@ -121,6 +127,7 @@ class FragmentMainList : BaseFragment() {
     override fun onResume() {
         super.onResume()
         fillAdapter()
+        ratePrompter.maybeShowRateDialog(requireActivity(), viewLifecycleOwner)
     }
 
     private fun fillAdapter() {

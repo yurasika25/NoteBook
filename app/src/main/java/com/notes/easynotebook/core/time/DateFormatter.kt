@@ -1,4 +1,4 @@
-package com.notes.easynotebook.utils
+package com.notes.easynotebook.core.time
 
 import java.text.SimpleDateFormat
 import java.util.Locale

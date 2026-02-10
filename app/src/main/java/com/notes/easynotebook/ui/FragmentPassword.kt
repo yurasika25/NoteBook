@@ -45,7 +45,7 @@ class FragmentPassword : BaseFragment() {
             deleteBtn.setOnClickListener {
                 val str = tvPassword.text.toString()
                 if (str.isNotEmpty()) {
-                    tvPassword.text = str.substring(0, str.length - 1)
+                    tvPassword.text = str.dropLast(1)
                 }
             }
 

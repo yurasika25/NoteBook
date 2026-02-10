@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.notes.easynotebook.databinding.RsItemBinding
 import com.notes.easynotebook.db.DbListItemNoteBook
 import com.notes.easynotebook.db.DbManagerNoteBook
-import com.notes.easynotebook.utils.DateFormatter.formatter
+import com.notes.easynotebook.core.time.DateFormatter.formatter
 import java.util.*
 
 class NoteBookAdapter(val onItemClicked: (DbListItemNoteBook) -> Unit) :

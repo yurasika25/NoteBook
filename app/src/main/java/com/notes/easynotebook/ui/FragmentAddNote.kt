@@ -63,16 +63,23 @@ class FragmentAddNote : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         getBundleData()
         if (_id == null && savedInstanceState == null) {
+            binding.tbAddNote.title = getString(R.string.new_note)
             lifecycleScope.launch {
                 Dispatchers.IO
                 delay(300)
                 showKeyBoard()
             }
             binding.titleText.requestFocus()
+        } else {
+            binding.tbAddNote.title = getString(R.string.edit_note)
         }
 
         binding.btnSaveNote.setOnClickListener {
             saveData()
+        }
+        binding.tbAddNote.setNavigationOnClickListener {
+            hideKeyBoard()
+            requireActivity().onBackPressedDispatcher.onBackPressed()
         }
     }
 
