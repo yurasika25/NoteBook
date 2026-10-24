@@ -4,6 +4,7 @@ import android.app.Activity
 import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import com.notes.easynotebook.R
 import com.notes.easynotebook.core.storage.RatePrefs
@@ -17,6 +18,8 @@ class RatePrompter(
     private val prefs: RatePrefs,
     private val gate: RateGate = RateGate()
 ) {
+    private var dialog: AlertDialog? = null
+    private var isCheckingOrShowing = false
 
     /**
      * notesCount is required to avoid prompting brand new users.
@@ -26,6 +29,8 @@ class RatePrompter(
         lifecycleOwner: LifecycleOwner,
         notesCount: Int
     ) {
+        if (isCheckingOrShowing || activity.isFinishing || activity.isDestroyed) return
+        isCheckingOrShowing = true
         lifecycleOwner.lifecycleScope.launch {
             val now = System.currentTimeMillis()
 
@@ -33,7 +38,13 @@ class RatePrompter(
             prefs.onSessionStart(now)
 
             val state = prefs.state.first()
-            if (!gate.shouldShow(state, now, notesCount)) return@launch
+            if (!gate.shouldShow(state, now, notesCount) ||
+                !lifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED) ||
+                activity.isFinishing || activity.isDestroyed
+            ) {
+                isCheckingOrShowing = false
+                return@launch
+            }
 
             // Mark shown immediately so it won't re-open if lifecycle triggers again
             prefs.setLastShown(now)
@@ -45,17 +56,22 @@ class RatePrompter(
     private fun showDialog(activity: Activity, lifecycleOwner: LifecycleOwner) {
         val binding = DialogRateAppBinding.inflate(LayoutInflater.from(activity))
 
-        val dialog = AlertDialog.Builder(activity)
+        dialog = AlertDialog.Builder(activity)
             .setView(binding.root)
             .setCancelable(true) // рекомендовано: юзер може закрити
             .create()
 
-        dialog.setOnShowListener {
-            dialog.window?.setBackgroundDrawableResource(R.color.transparent)
+        val currentDialog = dialog ?: return
+        currentDialog.setOnShowListener {
+            currentDialog.window?.setBackgroundDrawableResource(R.color.transparent)
+        }
+        currentDialog.setOnDismissListener {
+            dialog = null
+            isCheckingOrShowing = false
         }
 
         binding.btnRate.setOnClickListener {
-            dialog.dismiss()
+            currentDialog.dismiss()
 
             lifecycleOwner.lifecycleScope.launch {
                 prefs.markRated()
@@ -65,17 +81,17 @@ class RatePrompter(
         }
 
         binding.btnLater.setOnClickListener {
-            dialog.dismiss()
+            currentDialog.dismiss()
             // lastShownAt вже записаний при показі → повтор через 14 днів
         }
 
         binding.btnNoThanks.setOnClickListener {
-            dialog.dismiss()
+            currentDialog.dismiss()
             lifecycleOwner.lifecycleScope.launch {
                 prefs.setDoNotAskAgain(true)
             }
         }
 
-        dialog.show()
+        currentDialog.show()
     }
 }
