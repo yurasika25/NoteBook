@@ -1,4 +1,4 @@
-name: Release to Google Play
+name: Android CI
 
 on:
   push:
@@ -6,11 +6,10 @@ on:
   workflow_dispatch:
 
 jobs:
-  release:
+  verification:
     runs-on: ubuntu-latest
-
-    env:
-      GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/app/play-credentials.json
+    permissions:
+      contents: read
 
     steps:
       - name: Checkout code
@@ -29,27 +28,5 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
-      - name: Write Play credentials to file
-        run: |
-          mkdir -p "$GITHUB_WORKSPACE/app"
-          printf '%s' "$PLAY_PUBLISHER_JSON" > "$GOOGLE_APPLICATION_CREDENTIALS"
-          ls -l "$GOOGLE_APPLICATION_CREDENTIALS"
-          test -s "$GOOGLE_APPLICATION_CREDENTIALS"
-        env:
-          PLAY_PUBLISHER_JSON: ${{ secrets.PLAY_PUBLISHER_JSON }}
-
-      - name: Build release bundle
-        run: ./gradlew :app:bundleRelease
-
-      - name: Publish to Play (internal track)
-        run: |
-          ./gradlew :app:publishReleaseBundle \
-            -Pplay.serviceAccountCredentials=${{ github.workspace }}/app/play-credentials.json \
-            -Pplay.track=internal \
-            -Pplay.releaseStatus=completed
-
-      - name: Upload AAB as artifact (optional)
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-bundle
-          path: app/build/outputs/bundle/release/*.aab
+      - name: Run non-deploying Android checks
+        run: ./gradlew :app:assembleDebug :app:testDebugUnitTest
