@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.notes.easynotebook.databinding.RsItemBinding
 import com.notes.easynotebook.db.DbListItemNoteBook
-import com.notes.easynotebook.db.DbManagerNoteBook
 import com.notes.easynotebook.core.time.DateFormatter.formatter
 import java.util.*
 
@@ -41,8 +40,9 @@ class NoteBookAdapter(val onItemClicked: (DbListItemNoteBook) -> Unit) :
         notifyDataSetChanged()
     }
 
-    fun removeItem(post: Int, dbManagerNoteBook: DbManagerNoteBook) {
-        dbManagerNoteBook.removeItemFromDb(listMainDbListItemNoteBook[post].id)
+    fun getItem(position: Int): DbListItemNoteBook? = listMainDbListItemNoteBook.getOrNull(position)
+
+    fun removeAt(post: Int) {
         listMainDbListItemNoteBook.removeAt(post)
         notifyItemRemoved(post)
     }
