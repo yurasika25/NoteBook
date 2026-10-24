@@ -14,7 +14,6 @@
         android:layout_height="52dp"
         android:background="@color/note_book_color_main_fon"
         android:elevation="4dp"
-        android:contentDescription="@string/default_web_client_id"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
