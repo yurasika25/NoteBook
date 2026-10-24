@@ -1,0 +1,1 @@
+Improved note-saving reliability, draft recovery, and protection of existing notes during database upgrades.
