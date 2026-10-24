@@ -18,13 +18,26 @@ class RatePrompter(
     private val gate: RateGate = RateGate()
 ) {
 
-    fun maybeShowRateDialog(activity: Activity, lifecycleOwner: LifecycleOwner) {
-
+    /**
+     * notesCount is required to avoid prompting brand new users.
+     */
+    fun maybeShowRateDialog(
+        activity: Activity,
+        lifecycleOwner: LifecycleOwner,
+        notesCount: Int
+    ) {
         lifecycleOwner.lifecycleScope.launch {
             val now = System.currentTimeMillis()
+
+            // NEW: track sessions + first open timestamp
+            prefs.onSessionStart(now)
+
             val state = prefs.state.first()
-            if (!gate.shouldShow(state, now)) return@launch
+            if (!gate.shouldShow(state, now, notesCount)) return@launch
+
+            // Mark shown immediately so it won't re-open if lifecycle triggers again
             prefs.setLastShown(now)
+
             showDialog(activity, lifecycleOwner)
         }
     }
@@ -34,7 +47,7 @@ class RatePrompter(
 
         val dialog = AlertDialog.Builder(activity)
             .setView(binding.root)
-            .setCancelable(false)
+            .setCancelable(true) // рекомендовано: юзер може закрити
             .create()
 
         dialog.setOnShowListener {
@@ -53,6 +66,7 @@ class RatePrompter(
 
         binding.btnLater.setOnClickListener {
             dialog.dismiss()
+            // lastShownAt вже записаний при показі → повтор через 14 днів
         }
 
         binding.btnNoThanks.setOnClickListener {
@@ -61,6 +75,7 @@ class RatePrompter(
                 prefs.setDoNotAskAgain(true)
             }
         }
+
         dialog.show()
     }
 }

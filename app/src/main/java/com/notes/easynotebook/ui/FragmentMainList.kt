@@ -127,8 +127,10 @@ class FragmentMainList : BaseFragment() {
     override fun onResume() {
         super.onResume()
         fillAdapter()
-        ratePrompter.maybeShowRateDialog(requireActivity(), viewLifecycleOwner)
+        val notesCount = noteBookAdapter.itemCount
+        ratePrompter.maybeShowRateDialog(requireActivity(), viewLifecycleOwner, notesCount)
     }
+
 
     private fun fillAdapter() {
         val list = dbMangerNoteBook.readDbData()
