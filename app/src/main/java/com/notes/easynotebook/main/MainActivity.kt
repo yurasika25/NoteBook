@@ -34,8 +34,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun goToFragmentAddNote() {
-        replaceFragment(FragmentAddNote(), addStack = true, isAnimation = true)
+    fun goToFragmentAddNote(recoveryDraftKey: String? = null) {
+        replaceFragment(FragmentAddNote.newInstance(recoveryDraftKey = recoveryDraftKey), addStack = true, isAnimation = true)
     }
     fun goToMainFragment() {
         replaceFragment(FragmentMainList(), false)

@@ -16,5 +16,4 @@ object DbNameClassNoteBook : BaseColumns {
             "$TABLE_NAME (" +
             "$COLUMN_NAME_ID INTEGER PRIMARY KEY, $COLUMN_NAME_TITLE TEXT, " +
             "$COLUMN_NAME_CONTENT TEXT, $COLUMN_NAME_TIME BIGINT)"
-    const val SQL_DELETE_TABLE = "DROP TABLE IF EXISTS $TABLE_NAME"
 }

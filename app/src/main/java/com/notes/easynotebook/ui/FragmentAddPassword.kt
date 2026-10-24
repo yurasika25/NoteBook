@@ -11,14 +11,12 @@ import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
-import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.lifecycleScope
 import com.notes.easynotebook.R
 import com.notes.easynotebook.base.BaseFragment
 import com.notes.easynotebook.databinding.FrgAddPasswordBinding
 import com.notes.easynotebook.db.SharedPref
 import com.notes.easynotebook.`fun`.applySystemBarsInsets
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -44,10 +42,9 @@ class FragmentAddPassword : BaseFragment() {
 
         binding.apply {
             mainContainer.applySystemBarsInsets()
-            lifecycleScope.launch {
-                Dispatchers.IO
+            viewLifecycleOwner.lifecycleScope.launch {
                 delay(300)
-                showKeyBoard()
+                if (isAdded) showKeyBoard()
             }
 
             etOtp1.requestFocus()
@@ -91,12 +88,16 @@ class FragmentAddPassword : BaseFragment() {
     }
 
     private fun showConfirmDialog() {
-        mDialog = AlertDialog.Builder(requireContext())
+        val activity = activity ?: return
+        if (!isAdded || activity.isFinishing || activity.isDestroyed || mDialog?.isShowing == true) return
+        mDialog = AlertDialog.Builder(activity)
             .setTitle(R.string.delete_passcode)
             .setMessage(getString(R.string.sure_delete_passcode))
             .setNegativeButton(R.string.cancel) { _, _ -> mDialog?.dismiss() }
             .setPositiveButton(R.string.delete) { _, _ ->
-                SharedPref.setPassword(requireContext(), null)
+                val currentContext = context ?: return@setPositiveButton
+                SharedPref.setPassword(currentContext, null)
+                if (!isAdded) return@setPositiveButton
                 showShortToast(getString(R.string.delete_passcode_successful))
                 requireActivity().onBackPressedDispatcher.onBackPressed()
             }
@@ -132,31 +133,26 @@ class FragmentAddPassword : BaseFragment() {
             if (viewModel.password == viewModel.passwordRepeat) {
                 SharedPref.setPassword(requireContext(), viewModel.password)
 
-                lifecycleScope.launch {
-                    Dispatchers.IO
+                viewLifecycleOwner.lifecycleScope.launch {
                     setBackgroundInput(etOtp1, R.drawable.password_input_correct)
                 }
 
-                lifecycleScope.launch {
-                    Dispatchers.IO
+                viewLifecycleOwner.lifecycleScope.launch {
                     delay(60)
                     setBackgroundInput(etOtp2, R.drawable.password_input_correct)
                 }
 
-                lifecycleScope.launch {
-                    Dispatchers.IO
+                viewLifecycleOwner.lifecycleScope.launch {
                     delay(120)
                     setBackgroundInput(etOtp3, R.drawable.password_input_correct)
                 }
 
-                lifecycleScope.launch {
-                    Dispatchers.IO
+                viewLifecycleOwner.lifecycleScope.launch {
                     delay(180)
                     setBackgroundInput(etOtp4, R.drawable.password_input_correct)
                 }
 
-                lifecycleScope.launch {
-                    Dispatchers.IO
+                viewLifecycleOwner.lifecycleScope.launch {
                     delay(550)
                     hideKeyBoard()
                     requireActivity().onBackPressedDispatcher.onBackPressed()
@@ -171,13 +167,11 @@ class FragmentAddPassword : BaseFragment() {
                 binding.tvNotEqualsPassword.isVisible = true
                 clearPassword()
                 binding.etOtp1.requestFocus()
-                lifecycle.coroutineScope.launch {
-                    Dispatchers.IO
+                viewLifecycleOwner.lifecycleScope.launch {
                     delay(4000)
                     binding.tvNotEqualsPassword.isVisible = false
                 }
-                lifecycle.coroutineScope.launch {
-                    Dispatchers.IO
+                viewLifecycleOwner.lifecycleScope.launch {
                     delay(1000)
                     setBackgroundInput(etOtp1, R.drawable.password_input)
                     setBackgroundInput(etOtp2, R.drawable.password_input)
@@ -201,8 +195,7 @@ class FragmentAddPassword : BaseFragment() {
         binding.apply {
             if (isFirstAttempt) {
                 viewModel.password = enterPassword()
-                lifecycle.coroutineScope.launch {
-                    Dispatchers.IO
+                viewLifecycleOwner.lifecycleScope.launch {
                     delay(300)
                     tvTitlePassword.text = getString(R.string.re_enter_passcode)
                     titleSubPassword.text = getString(R.string.message_reinstall_app)
@@ -234,6 +227,8 @@ class FragmentAddPassword : BaseFragment() {
         etOtp1.text.toString() + etOtp2.text.toString() + etOtp3.text.toString() + etOtp4.text.toString()
 
     override fun onDestroyView() {
+        mDialog?.dismiss()
+        mDialog = null
         super.onDestroyView()
         _binding = null
     }
