@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "digest"
-require "fileutils"
 require "open3"
 require "shellwords"
 require "tmpdir"
@@ -9,44 +8,10 @@ require "tmpdir"
 default_platform(:android)
 
 APP_ID = "com.notes.easynotebook"
-ALLOWED_RELEASE_BRANCHES = %w[reliability-data-recovery main].freeze
-EXPECTED_COMMIT = "178e553874c5f482a50565da010dd2988399e2e9"
-EXPECTED_VERSION_CODE = "32"
-EXPECTED_VERSION_NAME = "2.6.9"
+ALLOWED_RELEASE_BRANCHES = %w[main].freeze
 EXPECTED_UPLOAD_CERT_SHA256 = "5B:0E:AE:0C:1A:67:B6:3C:11:57:57:93:E3:C2:B4:CB:22:24:FD:A5:61:3C:4E:F0:0B:4B:14:EF:2B:08:ED:4A"
-# Intentionally no default artifact hash: verification must fail until the newly
-# signed AAB has been independently hashed and that value is supplied at runtime.
-VERIFIED_AAB_SHA256 = ENV.fetch("VERIFIED_AAB_SHA256", "").downcase
-AAB_PATH = File.expand_path(ENV.fetch("RELEASE_AAB_PATH", "../app/release/EasyNotebook-2.6.9-32.aab"), __dir__)
-MAPPING_PATH = File.expand_path("../app/build/outputs/mapping/release/mapping.txt", __dir__)
 PLAY_SCOPE = "https://www.googleapis.com/auth/androidpublisher"
 REPO_ROOT = File.expand_path("..", __dir__)
-
-ALLOWED_RELEASE_SOURCE_CHANGES = %w[
-  app/build.gradle
-  app/src/main/res/layout/fragment_add_note.xml
-  app/src/main/res/layout/frg_add_password.xml
-  app/src/main/res/values/strings.xml
-  app/src/main/res/values-pl-rPL/strings.xml
-  app/src/main/res/values-uk-rUA/strings.xml
-  app/src/main/res/values-pl/strings.xml
-  app/src/main/res/values-uk/strings.xml
-].freeze
-
-REQUIRED_RELEASE_SOURCE_PATHS = %w[
-  app/build.gradle
-  app/src/main/res/values/strings.xml
-  app/src/main/res/values-pl/strings.xml
-  app/src/main/res/values-uk/strings.xml
-].freeze
-
-REQUIRED_LOCALIZED_STRING_NAMES = %w[
-  name
-  save
-  save_failed
-  draft_save_failed
-  save_with_draft_cleanup_failed
-].freeze
 
 def command_output!(*command, chdir: nil)
   options = chdir ? { chdir: chdir } : {}
@@ -56,19 +21,22 @@ def command_output!(*command, chdir: nil)
   UI.user_error!("Command failed: #{command.map(&:shellescape).join(" ")}\n#{stderr.strip}")
 end
 
-def repository_file(path)
-  File.join(REPO_ROOT, path)
-end
-
-def require_match!(actual, expected, label)
-  UI.user_error!("#{label} mismatch: expected #{expected.inspect}, got #{actual.inspect}") unless actual == expected
+def release_env!(name)
+  value = ENV[name].to_s
+  UI.user_error!("Set #{name} before release verification or upload") if value.empty?
+  value
 end
 
 def verified_aab_sha256!
-  unless VERIFIED_AAB_SHA256.match?(/\A[0-9a-f]{64}\z/)
-    UI.user_error!("Set VERIFIED_AAB_SHA256 to the independently measured SHA-256 of the newly signed 2.6.9 (32) AAB before verification or upload")
-  end
-  VERIFIED_AAB_SHA256
+  value = release_env!("VERIFIED_AAB_SHA256").downcase
+  UI.user_error!("VERIFIED_AAB_SHA256 must be a 64-character lowercase SHA-256 digest") unless value.match?(/\A[0-9a-f]{64}\z/)
+  value
+end
+
+def aab_path!
+  path = release_env!("RELEASE_AAB_PATH")
+  UI.user_error!("RELEASE_AAB_PATH does not identify a readable AAB") unless File.file?(path) && File.readable?(path)
+  path
 end
 
 def aapt2_path
@@ -107,68 +75,44 @@ def verify_source!
   unless ALLOWED_RELEASE_BRANCHES.include?(current_branch)
     UI.user_error!("Git branch is not approved for release verification: #{current_branch.inspect}")
   end
-  release_source = command_output!("git", "rev-parse", EXPECTED_COMMIT, chdir: REPO_ROOT).strip
-  require_match!(release_source, EXPECTED_COMMIT, "Release source commit")
-  head = command_output!("git", "rev-parse", "HEAD", chdir: REPO_ROOT).strip
-  command_output!("git", "merge-base", "--is-ancestor", EXPECTED_COMMIT, head, chdir: REPO_ROOT)
-
-  # Keep committed and working-tree evidence separate. A release may be verified
-  # before its approved source edits are committed, but only the explicit allowlist
-  # below is permitted in that state.
-  committed_app_sources = command_output!("git", "diff", "--name-only", "#{EXPECTED_COMMIT}..HEAD", "--", "app/src", "app/build.gradle", chdir: REPO_ROOT).lines.map(&:strip).reject(&:empty?)
-  working_app_sources = command_output!("git", "diff", "--name-only", "HEAD", "--", "app/src", "app/build.gradle", chdir: REPO_ROOT).lines.map(&:strip).reject(&:empty?)
-  untracked_app_sources = command_output!("git", "ls-files", "--others", "--exclude-standard", "--", "app/src", "app/build.gradle", chdir: REPO_ROOT).lines.map(&:strip).reject(&:empty?)
-  changed_app_sources = (committed_app_sources + working_app_sources + untracked_app_sources).uniq
-  unexpected_changes = changed_app_sources - ALLOWED_RELEASE_SOURCE_CHANGES
-  UI.user_error!("Unexpected application source changes: #{unexpected_changes.join(", ")}") unless unexpected_changes.empty?
-
-  missing_provenance_paths = REQUIRED_RELEASE_SOURCE_PATHS - changed_app_sources
-  unless missing_provenance_paths.empty?
-    UI.user_error!("Release source changes are missing from committed or permitted working-tree provenance: #{missing_provenance_paths.join(", ")}")
+  unless command_output!("git", "status", "--porcelain", chdir: REPO_ROOT).strip.empty?
+    UI.user_error!("Release verification requires a clean Git working tree")
   end
 
-  build_gradle = File.read(repository_file("app/build.gradle"))
-  require_match!(build_gradle[/versionCode\s+(\d+)/, 1], EXPECTED_VERSION_CODE, "Source versionCode")
-  require_match!(build_gradle[/versionName\s+[\"']([^\"']+)[\"']/, 1], EXPECTED_VERSION_NAME, "Source versionName")
-
-  REQUIRED_RELEASE_SOURCE_PATHS.drop(1).each do |path|
-    full_path = repository_file(path)
-    UI.user_error!("Required localization file is missing: #{path}") unless File.file?(full_path)
-    content = File.read(full_path)
-    missing_names = REQUIRED_LOCALIZED_STRING_NAMES.reject do |name|
-      content.match?(/<string\s+name=[\"']#{Regexp.escape(name)}[\"']/)
-    end
-    unless missing_names.empty?
-      UI.user_error!("Localization file #{path} is missing required strings: #{missing_names.join(", ")}")
-    end
-  end
+  expected_commit = release_env!("RELEASE_SOURCE_COMMIT")
+  actual_commit = command_output!("git", "rev-parse", "HEAD", chdir: REPO_ROOT).strip
+  UI.user_error!("Release source commit mismatch: expected #{expected_commit}, got #{actual_commit}") unless actual_commit == expected_commit
 end
 
 def verify_aab!
-  UI.user_error!("Approved AAB is missing: #{AAB_PATH}") unless File.file?(AAB_PATH)
-  require_match!(Digest::SHA256.file(AAB_PATH).hexdigest, verified_aab_sha256!, "AAB SHA-256")
+  aab = aab_path!
+  expected_version_code = release_env!("RELEASE_VERSION_CODE")
+  expected_version_name = release_env!("RELEASE_VERSION_NAME")
 
-  signature = command_output!("jarsigner", "-verify", "-certs", AAB_PATH)
+  actual_sha256 = Digest::SHA256.file(aab).hexdigest
+  UI.user_error!("AAB SHA-256 mismatch: expected #{verified_aab_sha256!}, got #{actual_sha256}") unless actual_sha256 == verified_aab_sha256!
+
+  signature = command_output!("jarsigner", "-verify", "-certs", aab)
   UI.user_error!("AAB signature verification did not report success") unless signature.include?("jar verified")
 
-  certificate = command_output!("keytool", "-printcert", "-jarfile", AAB_PATH)
+  certificate = command_output!("keytool", "-printcert", "-jarfile", aab)
   fingerprint = certificate[/SHA256:\s*([0-9A-F:]+)/i, 1]&.upcase
-  require_match!(fingerprint, EXPECTED_UPLOAD_CERT_SHA256, "Upload certificate SHA-256")
+  UI.user_error!("Upload certificate SHA-256 mismatch") unless fingerprint == EXPECTED_UPLOAD_CERT_SHA256
 
-  tree = aab_manifest_tree(AAB_PATH)
-  require_match!(tree[/A: package="([^"]+)"/, 1], APP_ID, "AAB applicationId")
-  require_match!(manifest_value(tree, "versionCode"), EXPECTED_VERSION_CODE, "AAB versionCode")
-  require_match!(manifest_value(tree, "versionName"), EXPECTED_VERSION_NAME, "AAB versionName")
+  tree = aab_manifest_tree(aab)
+  UI.user_error!("AAB applicationId mismatch") unless tree[/A: package="([^"]+)"/, 1] == APP_ID
+  UI.user_error!("AAB versionCode mismatch") unless manifest_value(tree, "versionCode") == expected_version_code
+  UI.user_error!("AAB versionName mismatch") unless manifest_value(tree, "versionName") == expected_version_name
   UI.user_error!("AAB unexpectedly enables android:debuggable") if tree.match?(/android:debuggable/)
   UI.user_error!("AAB unexpectedly enables android:testOnly") if tree.match?(/android:testOnly/)
 end
 
 platform :android do
-  desc "Read-only fail-closed verification of the signed 2.6.9 AAB and source provenance"
+  desc "Read-only fail-closed verification of a signed release AAB and clean source provenance"
   lane :verify_release do
     verify_source!
     verify_aab!
-    UI.success("Verified #{APP_ID} #{EXPECTED_VERSION_NAME} (#{EXPECTED_VERSION_CODE}) AAB and upload certificate")
+    UI.success("Verified #{APP_ID} #{release_env!("RELEASE_VERSION_NAME")} (#{release_env!("RELEASE_VERSION_CODE")}) AAB and upload certificate")
   end
 
   desc "Read-only Android Publisher API access check; it does not create an edit or upload an artifact"
@@ -182,12 +126,11 @@ platform :android do
     )
     service = Google::Apis::AndroidpublisherV3::AndroidPublisherService.new
     service.authorization = credentials
-    # reviews.list is an app-scoped GET request. It verifies access without creating an edit.
     service.list_reviews(APP_ID, max_results: 1)
     UI.success("Google Play service account has read access to #{APP_ID}")
   end
 
-  desc "Upload the pre-verified AAB only to Google Play Internal testing as a draft"
+  desc "Upload a pre-verified AAB only to Google Play Internal testing as a draft"
   lane :upload_internal do
     UI.user_error!("Set CONFIRM_INTERNAL_UPLOAD=YES to explicitly permit an Internal draft upload") unless ENV["CONFIRM_INTERNAL_UPLOAD"] == "YES"
     verify_release
@@ -196,14 +139,15 @@ platform :android do
     options = {
       package_name: APP_ID,
       json_key: play_credentials_path,
-      aab: AAB_PATH,
+      aab: aab_path!,
       track: "internal",
       release_status: "draft",
       skip_upload_metadata: true,
       skip_upload_images: true,
       skip_upload_screenshots: true
     }
-    options[:mapping] = MAPPING_PATH if File.file?(MAPPING_PATH)
+    mapping = ENV["RELEASE_MAPPING_PATH"]
+    options[:mapping] = mapping if mapping && File.file?(mapping)
     upload_to_play_store(**options)
     UI.success("Internal draft upload completed. This lane cannot target Production.")
   end

@@ -3,6 +3,25 @@ apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'com.google.firebase.appdistribution'
 apply plugin: 'com.android.application'
 apply plugin: 'com.github.triplet.play'
+
+def isolatedBuildDir = providers.gradleProperty("easyNotebookBuildDir").orNull
+if (isolatedBuildDir != null && !isolatedBuildDir.trim().isEmpty()) {
+    buildDir = file(isolatedBuildDir)
+}
+
+def releaseStorePath = System.getenv("EASY_NOTEBOOK_KEYSTORE_PATH")
+def releaseStorePassword = System.getenv("EASY_NOTEBOOK_KEYSTORE_PASSWORD")
+def releaseKeyPassword = System.getenv("EASY_NOTEBOOK_KEY_PASSWORD")
+def releaseKeyAlias = System.getenv("EASY_NOTEBOOK_KEY_ALIAS") ?: "key_old_lake"
+def releaseTaskRequested = gradle.startParameter.taskNames.any { taskName ->
+    def normalized = taskName.toLowerCase()
+    normalized.contains("bundlerelease") || normalized.contains("assemblerelease")
+}
+
+if (releaseTaskRequested && ([releaseStorePath, releaseStorePassword, releaseKeyPassword].any { value -> value == null || value.trim().isEmpty() })) {
+    throw new GradleException("Release signing requires EASY_NOTEBOOK_KEYSTORE_PATH, EASY_NOTEBOOK_KEYSTORE_PASSWORD, and EASY_NOTEBOOK_KEY_PASSWORD")
+}
+
 android {
     compileSdk 36
 
@@ -18,9 +37,20 @@ android {
     buildFeatures {
         viewBinding true
     }
+    signingConfigs {
+        release {
+            if (releaseStorePath != null && !releaseStorePath.trim().isEmpty()) {
+                storeFile file(releaseStorePath)
+                storePassword releaseStorePassword
+                keyAlias releaseKeyAlias
+                keyPassword releaseKeyPassword
+            }
+        }
+    }
 
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled true
             shrinkResources = true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'

@@ -32,6 +32,7 @@ local.properties
 /app/play-credentials.json
 /fastlane/.env
 /fastlane/play-service-account.json
+/release.local.env
 *.jks
 *.keystore
 *.p12
