@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.NoteBook" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.NoteBook.Base" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_200</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -13,8 +13,13 @@
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_200</item>
         <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/note_book_color_main_fon</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
         <!-- Customize your theme here. -->
+    </style>
+
+    <!-- Android 14 and below still draw an opaque status bar. Keep it on-brand there. -->
+    <style name="Theme.NoteBook" parent="Theme.NoteBook.Base">
+        <item name="android:statusBarColor">@color/note_book_color_main_fon</item>
     </style>
 </resources>

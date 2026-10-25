@@ -1,12 +1,12 @@
 package com.notes.easynotebook.main
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
 import com.notes.easynotebook.R
+import com.notes.easynotebook.`fun`.applySystemBarsInsets
 import com.notes.easynotebook.`fun`.replaceFragment
 import com.notes.easynotebook.db.SharedPref
 import com.notes.easynotebook.ui.FragmentAddNote
@@ -18,8 +18,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Android 15 enforces edge-to-edge for this target SDK. Opt in explicitly on
+        // every supported version and let the content view handle the resulting insets.
+        // Unlike enableEdgeToEdge(), this does not call the deprecated bar-color APIs.
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         setContentView(R.layout.main_activity)
-        WindowCompat.enableEdgeToEdge(window)
+        findViewById<View>(R.id.mainContainer).applySystemBarsInsets()
         if (savedInstanceState == null) {
             goToPasswordFragment()
         }

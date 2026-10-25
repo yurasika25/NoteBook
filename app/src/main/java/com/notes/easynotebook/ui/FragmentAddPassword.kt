@@ -16,7 +16,6 @@ import com.notes.easynotebook.R
 import com.notes.easynotebook.base.BaseFragment
 import com.notes.easynotebook.databinding.FrgAddPasswordBinding
 import com.notes.easynotebook.db.SharedPref
-import com.notes.easynotebook.`fun`.applySystemBarsInsets
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -41,7 +40,6 @@ class FragmentAddPassword : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
-            mainContainer.applySystemBarsInsets()
             viewLifecycleOwner.lifecycleScope.launch {
                 delay(300)
                 if (isAdded) showKeyBoard()

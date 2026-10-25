@@ -1,0 +1,7 @@
+<resources>
+    <!--
+      Android 15 enforces edge-to-edge and ignores custom status-bar colors for
+      non-floating activities. The activity root consumes the insets instead.
+    -->
+    <style name="Theme.NoteBook" parent="Theme.NoteBook.Base" />
+</resources>

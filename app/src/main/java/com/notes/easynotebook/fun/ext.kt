@@ -36,16 +36,32 @@ fun AppCompatActivity.replaceFragment(
 }
 
 fun View.applySystemBarsInsets() {
+    val initialPaddingLeft = paddingLeft
+    val initialPaddingTop = paddingTop
+    val initialPaddingRight = paddingRight
+    val initialPaddingBottom = paddingBottom
+
     ViewCompat.setOnApplyWindowInsetsListener(this) { view, insets ->
-        val systemBarsInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+        val systemBarsInsets = insets.getInsets(
+            WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
+        )
+        val navigationBarsInsets = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
+        val imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime())
+        // This root is the sole owner of bottom insets: keep bottom controls above
+        // whichever occupies more space, the system navigation area or the IME.
         view.setPadding(
-            systemBarsInsets.left,
-            systemBarsInsets.top,
-            systemBarsInsets.right,
-            systemBarsInsets.bottom
+            initialPaddingLeft + systemBarsInsets.left,
+            initialPaddingTop + systemBarsInsets.top,
+            initialPaddingRight + systemBarsInsets.right,
+            initialPaddingBottom + maxOf(
+                systemBarsInsets.bottom,
+                navigationBarsInsets.bottom,
+                imeInsets.bottom
+            )
         )
         insets
     }
+    ViewCompat.requestApplyInsets(this)
 }
 
 

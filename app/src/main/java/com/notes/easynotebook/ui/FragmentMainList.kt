@@ -29,7 +29,6 @@ import com.notes.easynotebook.core.storage.RatePrefs
 import com.notes.easynotebook.databinding.FrgMainListBinding
 import com.notes.easynotebook.db.DbManagerNoteBook
 import com.notes.easynotebook.db.DbResult
-import com.notes.easynotebook.`fun`.applySystemBarsInsets
 import com.notes.easynotebook.main.MainActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -113,7 +112,6 @@ class FragmentMainList : BaseFragment() {
             }
             true
         }
-        binding.mainContainer.applySystemBarsInsets()
     }
 
     private fun showNewNoteOptions() {
